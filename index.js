@@ -17,8 +17,6 @@ app.use(cors("*"));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json({limit: "10kb"}));
 
-//app.use(router);
-//TODO faire la doc (1 demandée min "je crois")
 
 
 // Configuration du router API
@@ -27,9 +25,10 @@ app.use("/api", apiRouter);
 // Configuration du router Admin (pour plus tard)
 app.use("/admin", adminRouter);
 
+//app.use(router);
+//TODO faire la doc (1 demandée min "je crois")
 app.use("/", (req, res) => {
-  res.send("<h1>Bienvenue sur l'API de ZombieLand</h1");
-  
+  res.send("<h1>Bienvenue sur l'API de ZombieLand</h1>");
 });
 
 const PORT = process.env.PORT || 3000;

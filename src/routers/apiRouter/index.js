@@ -1,8 +1,6 @@
 import { Router } from "express";
-
+import {router as attractionRouter} from"./attraction.router.js"
 
 export const router = Router();
 
-router.get ("/", (req, res) => {
-  res.send("it's me l'API");
-});
+router.use(attractionRouter);

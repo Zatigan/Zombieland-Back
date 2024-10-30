@@ -29,3 +29,18 @@ export async function getAttractionByCategory(req, res) {
   res.json(attractionsByCategory);
 };
 
+export async function getOneAttraction(req, res) {
+  const attractionId = parseInt(req.params.id)
+
+  if (isNaN(attractionId)) {
+    return res.status(404).json({ error: "Attraction not found. Please verify the provided id"})
+  }
+
+  const attraction = await Attraction.findByPk(attractionId);
+
+  if (! attraction) {
+    return res.status(404).json({ error: "Attraction not found. Please verify the provided id"})
+  }
+
+  res.json(attraction)
+}

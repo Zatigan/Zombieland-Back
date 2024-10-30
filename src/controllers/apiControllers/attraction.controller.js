@@ -8,7 +8,7 @@ export async function getAllAttractions(req,res) {
 // Tri des attractions par catégorie
 
 export async function getAttractionByCategory(req, res) {
-  const categoryId = parseInt(req.params.categoryId);
+  const categoryId = parseInt(req.params.id);
 
   if (isNaN(categoryId)) {
     return res.status(400).json({ error: "ID must be an integer." });
@@ -45,7 +45,7 @@ export async function getOneAttraction(req, res) {
   res.json(attraction)
 }
 
-// Trouver 3 attractions aléatoires [Ici le code est bon, la route fait chier]
+// Trouver 3 attractions aléatoires
 
 export async function getThreeRandomAttractions(req, res) {
 

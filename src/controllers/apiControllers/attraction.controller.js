@@ -1,4 +1,4 @@
-import {Attraction, Category} from "../../models/index.js"
+import {Attraction, Category, sequelize} from "../../models/index.js"
 
 export async function getAllAttractions(req,res) {
   const attractions = await Attraction.findAll({ include: "categories" });
@@ -43,4 +43,16 @@ export async function getOneAttraction(req, res) {
   }
 
   res.json(attraction)
+}
+
+// Trouver 3 attractions aléatoires [Ici le code est bon, la route fait chier]
+
+export async function getThreeRandomAttractions(req, res) {
+
+  const getThreeAttractions = await Attraction.findAll(
+    { include: "categories",
+      limit: 3,
+      order: sequelize.random()
+     });
+  res.json(getThreeAttractions);
 }

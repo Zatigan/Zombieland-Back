@@ -32,5 +32,5 @@ Category.belongsToMany(Attraction,{
   foreignKey: "category_id"
 })
 const categories = await Category.findAll({ include: "attractions" });
-    console.log(JSON.stringify(categories, null, 2));
+    /* console.log(JSON.stringify(categories, null, 2)); */
 export {User, Reservation, Attraction, Category, sequelize}

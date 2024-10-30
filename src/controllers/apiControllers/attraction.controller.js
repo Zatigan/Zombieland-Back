@@ -1,4 +1,4 @@
-import {Attraction, Category} from "../../models/index.js"
+import {Attraction, Category, sequelize} from "../../models/index.js"
 
 export async function getAllAttractions(req,res) {
   const attractions = await Attraction.findAll({ include: "categories" });
@@ -8,7 +8,7 @@ export async function getAllAttractions(req,res) {
 // Tri des attractions par catégorie
 
 export async function getAttractionByCategory(req, res) {
-  const categoryId = parseInt(req.params.categoryId);
+  const categoryId = parseInt(req.params.id);
 
   if (isNaN(categoryId)) {
     return res.status(400).json({ error: "ID must be an integer." });
@@ -43,4 +43,16 @@ export async function getOneAttraction(req, res) {
   }
 
   res.json(attraction)
+}
+
+// Trouver 3 attractions aléatoires
+
+export async function getThreeRandomAttractions(req, res) {
+
+  const getThreeAttractions = await Attraction.findAll(
+    { include: "categories",
+      limit: 3,
+      order: sequelize.random()
+     });
+  res.json(getThreeAttractions);
 }

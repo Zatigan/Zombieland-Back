@@ -6,5 +6,6 @@ import { controllerWrapper as cw } from "./controller-wrapper.js";
 export const router = Router();
 
 router.get("/attractions", cw(attractionsController.getAllAttractions));
-router.get("/attractions/:categoryId", cw(attractionsController.getAttractionByCategory));
+router.get('/attractions/random', cw(attractionsController.getThreeRandomAttractions));
 router.get("/attractions/:id", cw(attractionsController.getOneAttraction));
+router.get("/attractions/category/:id", cw(attractionsController.getAttractionByCategory));

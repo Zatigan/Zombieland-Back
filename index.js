@@ -12,6 +12,9 @@ const app = express();
 // Desactiver le header x-powered-by Express
 app.disable("x-powered-by");
 
+//déclarer le fichier static
+app.use(express.static("./public"));
+
 
 app.use(cors("*"));
 

@@ -29,8 +29,8 @@ User.init ({
     allowNull: true,
   },
 }, {
+  sequelize,
   tableName: 'user',
   timestamps: false,
 });
 
-module.exports = User;

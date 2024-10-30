@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {router as attractionRouter} from"./attraction.router.js"
+import { router as attractionsRouter} from "./attraction.router.js"
 
 export const router = Router();
 
-router.use(attractionRouter);
+router.use(attractionsRouter);

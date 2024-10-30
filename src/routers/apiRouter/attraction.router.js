@@ -1,6 +1,9 @@
 import { Router } from "express";
-import * as attractionController from "../../controllers/apiControllers/attraction.controller.js"
+
+import * as attractionsController from "../../controllers/apiControllers/attraction.controller.js";
+import { controllerWrapper as cw } from "./controller-wrapper.js";
 
 export const router = Router();
 
-router.get ("/attractions", attractionController.getAllAttractions);
+router.get("/attractions", cw(attractionsController.getAllAttractions));
+

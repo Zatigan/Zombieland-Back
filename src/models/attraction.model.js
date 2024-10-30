@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./sequelize-client.js";
-import { Category } from "";
+
 
 export class Attraction extends Model {}
 

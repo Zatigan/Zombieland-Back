@@ -4,3 +4,28 @@ export async function getAllAttractions(req,res) {
   const attractions = await Attraction.findAll({ include: "categories" });
   res.json(attractions);
 };
+
+// Tri des attractions par catégorie
+
+export async function getAttractionByCategory(req, res) {
+  const categoryId = parseInt(req.params.categoryId);
+
+  if (isNaN(categoryId)) {
+    return res.status(400).json({ error: "ID must be an integer." });
+  }
+  const attractionsByCategory = await Attraction.findAll({
+    include: {
+      model: Category,
+      as: "categories",
+      where: { id: categoryId },
+      attributes: ["id", "name"],
+    },
+  });
+
+  if (attractionsByCategory.length === 0) {
+    return res.status(404).json({ message: "No attractions found for this category." });
+  }
+
+  res.json(attractionsByCategory);
+};
+

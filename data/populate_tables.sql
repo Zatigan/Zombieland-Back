@@ -31,16 +31,25 @@ VALUES
 (4, 4, 4),
 (5, 5, 5);
 
-
-
 -- Insertion des utilisateurs
 
 INSERT INTO "user" 
-("firstname", "lastname", "email", "password")
+("id", "firstname", "lastname", "email", "password")
 VALUES
-    ('Alice', 'Martin', 'alice.martin@example.com', 'password123'),
-    ('Bob', 'Dupont', 'bob.dupont@example.com', 'password456'),
-    ('Claire', 'Durand', 'claire.durand@example.com', 'password789'),
-    ('David', 'Moreau', 'david.moreau@example.com', 'password101');
+    (1, 'Alice', 'Martin', 'alice.martin@example.com', 'password123'),
+    (2, 'Bob', 'Dupont', 'bob.dupont@example.com', 'password456'),
+    (3, 'Claire', 'Durand', 'claire.durand@example.com', 'password789'),
+    (4, 'David', 'Moreau', 'david.moreau@example.com', 'password101');
+
+
+INSERT INTO "reservation"
+("id", "user_id", "ref_number", "date", "ticket", "total_price")
+VALUES
+(1, 1, 10001, '2024-11-15', 2, 120.00),
+(2, 2, 10002, '2024-11-16', 4, 240.00),
+(3, 3, 10003, '2024-11-17', 1, 60.00),
+(4, 4, 10004, '2024-11-17', 3, 180.00);
 
 COMMIT;
+
+

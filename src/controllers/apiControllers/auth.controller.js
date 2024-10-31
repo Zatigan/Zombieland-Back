@@ -1,4 +1,4 @@
-/* import * as argon2 from "argon2";
+import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken'
 import { User } from "../../models/user.model.js";
 
@@ -32,7 +32,7 @@ const signUpSchema = Joi.object({
 
 export async function getAuthenticated (req, res) {
 
-} */
+}
 
 
 

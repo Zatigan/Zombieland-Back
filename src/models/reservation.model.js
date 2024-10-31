@@ -4,19 +4,24 @@ import { sequelize } from "./sequelize-client.js";
 export class Reservation extends Model {}
 
 Reservation.init({
-  ref_number: {
-    type: DataTypes.INTEGER,
-    allowNull: false
+
+ref_number: {
+  type: DataTypes.INTEGER,
+  allowNull: false
 }, 
-  ticket: {
-    type: DataTypes.INTEGER,
-    allowNull: false
+date: {
+  type: DataTypes.DATEONLY,
+  allowNull: false
+},
+ticket: {
+  type: DataTypes.INTEGER,
+  allowNull: false
 }, 
-  total_price: {
-    type: DataTypes.DECIMAL,
-    allowNull: false
+total_price: {
+  type: DataTypes.DECIMAL,
+  allowNull: false
 },
 }, {
   sequelize,
-  tableName: "reservation"
+  tableName: "reservation",
 });

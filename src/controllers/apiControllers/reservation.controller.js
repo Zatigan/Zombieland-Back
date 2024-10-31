@@ -20,3 +20,29 @@ export async function getReservationPage(req, res) {
 
   res.json(dateAvailability);
 }
+
+export async function addReservation(req, res) {
+
+ // On récupère les champs dont on va se servir
+const { date, ticket, price } = req.body;
+
+const lastRefReservation = await Reservation.findOne({
+  order: [['ref_number', 'DESC']],
+  attributes: ['ref_number'],
+});
+
+const newRefNumber = lastRefReservation.ref_number +1;
+
+const reservationData = {
+  ref_number: newRefNumber,
+  date,
+  ticket,
+  total_price: price
+}
+
+console.log(reservationData)
+const createReservation = await Reservation.create(reservationData)
+
+  res.json(createReservation);
+}
+

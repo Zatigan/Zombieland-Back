@@ -45,7 +45,5 @@ Attraction.init ({
   }, 
 }, {
   sequelize,
-  modelName: "Attraction",
   tableName: "attraction",
-  timestamps: false,
 });

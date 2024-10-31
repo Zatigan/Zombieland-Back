@@ -42,6 +42,7 @@ VALUES
     (4, 'David', 'Moreau', 'david.moreau@example.com', 'password101');
 
 
+
 INSERT INTO "reservation"
 ("id", "user_id", "ref_number", "date", "ticket", "total_price")
 VALUES
@@ -49,6 +50,7 @@ VALUES
 (2, 2, 10002, '2024-11-16', 4, 240.00),
 (3, 3, 10003, '2024-11-17', 1, 60.00),
 (4, 4, 10004, '2024-11-17', 3, 180.00);
+
 
 COMMIT;
 

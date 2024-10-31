@@ -35,8 +35,7 @@ const userSchema = Joi.object({
   .pattern(new RegExp('(?=.*[a-z])')) // Au moins une minuscule
   .pattern(new RegExp('(?=.*[A-Z])')) // Au moins une majuscule
   .pattern(new RegExp('(?=.*[0-9])')) // Au moins un chiffre
-  .required(),
-  
+  .required(), 
   //profil_image: Joi.string().optional()
 })
 
@@ -79,6 +78,36 @@ const createUser = await User.create(userData);
 return res.status(201).json({
   message: 'User created. Please login to get your access token.',
 });
+
+}
+
+export async function loginUser(req, res) {
+  
+  // On recupère les données email et password dans le body
+  const {email, password} = req.body;
+
+  // Vérifier si les champs son présent
+  if (!email || !password) {
+    return res.status(400).json({ massage: "Email and password are required" });
+  }
+
+  // Recherche si l'utilisateur existe
+  const user = await User.findOne({ where: { email }});
+
+  // Message d'erreur si on trouve l'utilisateur
+  if (!user) {
+    return res.status(404).json({ message: "User not found"})
+  }
+
+  // ON veut COMPARER "password" avec le "user.password" de la BDD ==> argon2
+  const hashPassword = user.password;
+  const rawPassword = password;
+
+   // Si les deux mdp NE matchent PAS : message d'erreur et STOP
+   const isMatching = await argon2.verify(hashPassword, rawPassword);
+   if (!isMatching) {
+     return res.status(400).render("login", { errorMessage: "L'email ou le mot de passe renseigné est incorrect." });
+   }
 
 }
  

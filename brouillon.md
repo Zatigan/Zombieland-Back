@@ -17,7 +17,7 @@ Pour gérer l’identification dans un projet de site web avec un front-end en R
     - bcrypt/Argon2 : Pour hacher les mots de passe avant de les stocker.
     - jsonwebtoken : Pour créer des tokens JWT pour l'authentification.
     - dotenv : Pour gérer les variables d’environnement, comme la clé secrète JWT.
-    - CORS : Pour permettre au front-end en React d’effectuer des requêtes vers l'API Express si le front   et le back sont sur des serveurs différents.
+    - CORS : Pour permettre au front-end en React d’effectuer des requêtes vers l'API Express si le front et le back sont sur des serveurs différents.
 
 # 3. Création des Routes d’Inscription et de Connexion sur le Back-End
 

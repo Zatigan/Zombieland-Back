@@ -6,5 +6,5 @@ export const router = Router();
 
 router.get("/user", cw(userRouter.getAllUsers));
 router.post("/signup", cw(userRouter.createUser));
-/* router.post("/signin", cw(userRouter.createUser)); */
+router.post("/login", cw(userRouter.loginUser));
 router.get("/user/:id", cw(userRouter.getOneUser));

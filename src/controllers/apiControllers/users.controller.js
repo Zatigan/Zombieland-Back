@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { User } from "../../models/index.js";
 import * as argon2 from "argon2";
+import jwt from 'jsonwebtoken';
 
 export async function getAllUsers(req,res) {
   const users = await User.findAll()
@@ -69,8 +70,7 @@ const userData = {
 };
 
 // Création du user
-
-const createUser = await User.create(userData);
+const user = await User.create(userData);
 
 // res.status(200).json(createUser)
 //delete createUser.password;
@@ -101,13 +101,19 @@ export async function loginUser(req, res) {
 
   // ON veut COMPARER "password" avec le "user.password" de la BDD ==> argon2
   const hashPassword = user.password;
-  const rawPassword = password;
+  
 
-   // Si les deux mdp NE matchent PAS : message d'erreur et STOP
-   const isMatching = await argon2.verify(hashPassword, rawPassword);
+   // Si le mdp ne matchent pas : message d'erreur et STOP
+   const isMatching = await argon2.verify(hashPassword, password);
    if (!isMatching) {
-     return res.status(400).render("login", { errorMessage: "L'email ou le mot de passe renseigné est incorrect." });
+     return res.status(400).json({ massage: "Incorrect email address or password." });
    }
+
+   const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+});
+
+return res.json({ accessToken });
 
 }
  

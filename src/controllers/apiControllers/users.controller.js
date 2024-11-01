@@ -27,7 +27,7 @@ const userSchema = Joi.object({
   .min(1)
   .max(50),
   
-  email: Joi.string().email().required()   /* librairie email validator ?*/,
+  email: Joi.string().email().required()   /* librairie email validator [https://www.npmjs.com/package/validator] in Enzo auth.controller S10-S11 Oquiz ?*/,
   //{ minDomainSegments: 3, tlds: { allow: ['com', 'net', 'io']} }
 
   password: Joi.string()
@@ -48,7 +48,7 @@ if (error) {
 // On récupère les champs dont on va se servir
 const { firstname, lastname, email, password } = req.body;
 
-// On vérifie qu'aucun champ de donnée n'est manquant
+// On vérifie qu'aucun champ n'est manquant / vide
 /* if (!firstname || !lastname || !email || !password) {
   res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
   return; 
@@ -63,7 +63,7 @@ if (userExists) {
     return res.status(409).json({ message: 'An account is already associated to this email adress' });
 }
 
- // hacher le mot de passe avant de le stocker.
+ // Hachage du mot de passe avant de le stocker.
  const hashedPassword = await argon2.hash(password);
 
 //On stocke les données dans userData

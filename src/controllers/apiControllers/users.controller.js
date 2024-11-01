@@ -27,7 +27,7 @@ const userSchema = Joi.object({
   .min(1)
   .max(50),
   
-  email: Joi.string().email().required()   /*email validator ?*/,
+  email: Joi.string().email().required()   /* librairie email validator ?*/,
   //{ minDomainSegments: 3, tlds: { allow: ['com', 'net', 'io']} }
 
   password: Joi.string()
@@ -48,6 +48,11 @@ if (error) {
 // On récupère les champs dont on va se servir
 const { firstname, lastname, email, password } = req.body;
 
+// On vérifie qu'aucun champ de donnée n'est manquant
+/* if (!firstname || !lastname || !email || !password) {
+  res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+  return; 
+}*/
 // Todo vérifier si les données existe => si pas de données res.status(400)
 
 const userExists = await User.findOne({ where: { email } });
@@ -66,7 +71,7 @@ const userData = {
   firstname,
   lastname,
   email,
-  password: hashedPassword
+  password: hashedPassword,
 };
 
 // Création du user
@@ -86,7 +91,7 @@ export async function loginUser(req, res) {
   // On recupère les données email et password dans le body
   const {email, password} = req.body;
 
-  // Vérifier si les champs son présent
+  // Vérifier si les champs sont présent
   if (!email || !password) {
     return res.status(400).json({ massage: "Email and password are required" });
   }

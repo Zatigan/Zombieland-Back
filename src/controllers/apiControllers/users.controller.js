@@ -88,7 +88,7 @@ export async function loginUser(req, res) {
 
   // Vérifier si les champs son présent
   if (!email || !password) {
-    return res.status(400).json({ massage: "Email and password are required" });
+    return res.status(400).json({ message: "Email and password are required" });
   }
 
   // Recherche si l'utilisateur existe
@@ -109,6 +109,9 @@ export async function loginUser(req, res) {
      return res.status(400).json({ massage: "Incorrect email address or password." });
    }
 
+   // Génération du Token d’Accès
+   // Si l'utilisateur est authentifié avec succès, un token d'accès JWT est généré, contenant l'ID de l'utilisateur. 
+   // La clé secrète (stockée dans process.env.JWT_SECRET) signe le token.
    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: '1h',
 });

@@ -13,9 +13,7 @@ const signUpSchema = Joi.object({
     .max(100)
     .pattern(new RegExp('(?=.*[a-z])')) // At least one lowercase letter
     .pattern(new RegExp('(?=.*[A-Z])')) // At least one uppercase letter
-    .pattern(new RegExp('(?=.*[0-9])')) // At least one digit
-
-    
+    .pattern(new RegExp('(?=.*[0-9])')) // At least one digit   
   })
   
 

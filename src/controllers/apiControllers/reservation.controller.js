@@ -48,7 +48,7 @@ if (!ticket || ticket <= 0) {
   raw: true,
 });
 
-const ticketsReserved = parseInt(dateAvailability.tickets_reserved)
+const ticketsReserved = dateAvailability ? parseInt(dateAvailability.tickets_reserved): 0;
 const ticketsAvailable = 100 - ticketsReserved;
 
 if (ticket > ticketsAvailable)

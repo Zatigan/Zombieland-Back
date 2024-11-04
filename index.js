@@ -40,6 +40,13 @@ app.use("/", (req, res) => {
   res.send("<h1>Bienvenue sur l'API de ZombieLand</h1>");
 });
 
+// 404 middleware for handling unexisting routes
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Internal Server Error" });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);

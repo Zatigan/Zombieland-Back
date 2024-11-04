@@ -34,7 +34,6 @@ export async function createUser(req, res) {
   // On récupère les champs dont on va se servir
   const { firstname, lastname, email, password } = req.body;
   
-
 // On vérifie qu'aucun champ n'est manquant / vide
 if (!firstname || !lastname || !email || !password) {
   res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));

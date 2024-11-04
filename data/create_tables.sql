@@ -49,7 +49,10 @@ CREATE TABLE "attraction" (
     "height_restriction" DECIMAL(4, 2) NOT NULL,
     "health_hazard" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMPTZ
+    "updated_at" TIMESTAMPTZ,
+    "caroussel1" VARCHAR(255),
+    "caroussel2" VARCHAR(255),
+    "caroussel3" VARCHAR(255)
 );
 
 -- Création de la table attraction_category

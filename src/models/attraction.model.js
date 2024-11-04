@@ -43,6 +43,15 @@ Attraction.init ({
     type: DataTypes.TEXT,
     allowNull: false,
   }, 
+  caroussel1:{
+    type: DataTypes.STRING(50),
+  },
+  caroussel2:{
+    type: DataTypes.STRING(50),
+  },
+  caroussel3:{
+    type: DataTypes.STRING(50),
+  },
 }, {
   sequelize,
   tableName: "attraction",

@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+<main>
+  <h1>Modifier une attraction : <%= attraction.name %></h1>
+
+  <form action="POST">
+    <label for="name">Nom de l'attraction</label>
+    <input type="text" id="name" name="name" value="<%= attraction.name %>" required>
+    <label for="description_short">Description courte</label>
+    <textarea rows= "6" cols= "50" id="description_short" name="description_short"><%= attraction.description_short %></textarea>
+  </form>
+</main>
+<%- include('partials/footer') %>

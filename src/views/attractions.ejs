@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Liste des attractions</h1>
+  <table>
+    <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Image</th>
+    <th>Modifier</th>
+    <th>Supprimer</th>
+  </tr>
+      <% attractions.forEach(attraction => { %>
+        <tr>
+          <td><%= attraction.id %></td>
+          <td><%= attraction.name %></td>
+          <td><img class="img-attraction" src="<%= attraction.image %>" alt="<%= attraction.name %>"></td>
+          <td><a href="/admin/attractions/<%= attraction.id %>">Modifier</a></td>
+          <td><a href="/admin/attractions/<%= attraction.id %>">Supprimer</a></td>
+  
+        </tr>
+      <% }) %>
+  </table>
+</main>
+<%- include('partials/footer') %>

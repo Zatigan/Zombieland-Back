@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import { router as  adminRouter } from "./src/routers/adminRouter/index.js";
 import { router as apiRouter } from "./src/routers/apiRouter/index.js";
+import path from "path";
 
 
 const app = express();
@@ -13,7 +14,15 @@ const app = express();
 app.disable("x-powered-by");
 
 //déclarer le fichier static
-app.use(express.static("./public"));
+const securedPathToAssets = path.join('public');
+app.use(express.static(securedPathToAssets));
+app.use(express.static('public'));
+
+
+app.set('view engine', 'ejs');
+
+const securedPathToViews = path.join("src/views");
+app.set('views', securedPathToViews);
 
 
 app.use(cors("*"));

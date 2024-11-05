@@ -1,0 +1,64 @@
+body{
+  display: flex;
+  width: 100%;
+}
+header {
+  background-color: #0d0609 ;
+  height: 100vh;
+  width: 25vh;
+  position: fixed;
+}
+nav{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  padding: 2vh;
+}
+
+header a{
+  text-decoration: none;
+  color: #f5fcfc;
+}
+
+.lien-menu {
+  font-weight: 600;
+}
+
+.img-attraction{
+  width: 10vh;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  padding: 5vh;
+  margin-left: 25vh;
+  gap: 5vh;
+  width: 75%;
+}
+
+table{
+
+  padding: 5vh;
+  border-collapse: collapse;
+
+}
+
+th, td {
+  padding: 1vh 2vh;
+  text-align: left;
+}
+
+th{
+  border-bottom: 2px solid #243037;
+  margin: 1vh;
+}
+
+td{
+  border-bottom: 1px solid #243037;
+  margin: 1vh;
+}
+
+table a {
+  color: #63878C;
+}

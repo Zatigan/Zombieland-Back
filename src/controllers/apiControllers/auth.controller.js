@@ -62,7 +62,7 @@ if (!firstname || !lastname || !email || !password) {
   };
   
   // Création du user
-  const user = await User.create(userData);
+  await User.create(userData);
   
   // res.status(200).json(createUser)
   //delete createUser.password;
@@ -85,7 +85,7 @@ if (!firstname || !lastname || !email || !password) {
   
     // Recherche si l'utilisateur existe
     const user = await User.findOne({ where: { email }});
-  
+    console.log('user', user);
     // Message d'erreur si on trouve l'utilisateur
     if (!user) {
       return res.status(404).json({ message: "User not found"})
@@ -97,18 +97,21 @@ if (!firstname || !lastname || !email || !password) {
   
      // Si le mdp ne matchent pas : message d'erreur et STOP
      const isMatching = await argon2.verify(hashPassword, password);
+     console.log(isMatching)
      if (!isMatching) {
-       return res.status(400).json({ massage: "Incorrect email address or password." });
+       return res.status(400).json({ message: "Incorrect email address or password." });
      }
-  
+     const userSafe = {...user.dataValues};
+     const key = "password";
+     delete userSafe[key];
      // Génération du Token d’Accès
      // Si l'utilisateur est authentifié avec succès, un token d'accès JWT est généré, contenant l'ID de l'utilisateur. 
      // La clé secrète (stockée dans process.env.JWT_SECRET) signe le token.
      const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h', 
-  });
+    });
   
-  return res.json({ accessToken });
+  return res.json({ accessToken, user : userSafe });
   
   }
 

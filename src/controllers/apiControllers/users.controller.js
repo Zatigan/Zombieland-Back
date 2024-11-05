@@ -1,5 +1,5 @@
 import { User } from "../../models/index.js";
-
+import { Reservation } from "../../models/index.js";
 //* ====================== Functions à mettre plus tard dans l'adminControllers ======================
 
 export async function getAllUsers(req,res) {
@@ -25,10 +25,19 @@ export async function myProfile(req, res) {
       
      /*  user.profilePicture = user.profilePicture
           ? ImageService.getImageUrl(req, user.profilePicture)
-          : null; */
-          
+          : null; */         
       res.json(user);
   };
 
+export async function reservationByProfile(req, res) {
+  const userReservation = await Reservation.findAll({
+    where: {
+      user_id: req.user.id,
+    },
+  });
+
+             
+    res.json(userReservation);
+}
 
 export default myProfile;

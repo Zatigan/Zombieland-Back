@@ -6,6 +6,6 @@ export const router = Router();
 
 router.get("/users", cw(usersController.userPage));
 router.get("/users/add", cw(usersController.addUserPage));
-router.post("/users/add", cw(usersController.addUserPage));
+router.post("/users/add", cw(usersController.addUser));
 router.get("/users/:id", cw(usersController.getOneUser));
-router.delete("/users/del/:id", cw(usersController.delUser));
+router.post("/users/del/:id", cw(usersController.delUser));

@@ -3,7 +3,7 @@
 <main>
   <h1>Modifier un utilisateur</h1>
 
-  <form action="POST" class="form-user">
+  <form action="/admin/users/<%= user.id %>" method="POST" class="form-user">
     <div>
       <label for="firstname">Prénom</label>
       <input type="text" name="firstname" id="firstname" value="<%= user.firstname %>" required>

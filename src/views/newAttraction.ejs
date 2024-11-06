@@ -2,20 +2,39 @@
 
 <main>
   <h1>Ajouter une attraction</h1>
+  
 
   <form action="/admin/attractions/add" method="POST" enctype="multipart/form-data"  class="form-attraction">
-    <div>
-      <label for="name">Nom de l'attraction</label>
-      <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-      <label for="description_short">Description courte</label>
-      <textarea rows= "6" cols= "50" id="description_short" name="description_short" required></textarea>
-    </div>
+
+      <div>
+        <label for="name">Nom de l'attraction</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+
+      <div>
+        <label for="category">Catégorie</label>
+        <select name="category" id="category" required>
+          <option value="Montagnes russes" >Montagnes russes</option>
+          <option value="Attractions aquatiques">Attractions aquatiques</option>
+          <option value="Maisons hantées">Maisons hantées</option>
+          <option value="Expériences interactives">Expériences interactives</option>
+          <option value="Spectacles">Spectacles</option>
+          </select>
+      </div>
+  
+
+      <div>
+        <label for="description_short">Description courte</label>
+        <textarea rows= "6" cols= "50" id="description_short" name="description_short" required></textarea>
+      </div>
+
+
     <div>
       <label for="description_long">Description longue</label>
       <textarea rows= "10" cols= "100" id="description_long" name="description_long" required></textarea>
     </div>
+
     <div>
       <label for="opening_time">Heure d'ouverture</label>
       <select name="opening_time" id="opening_time" required>
@@ -27,6 +46,7 @@
         <option value="14:00:00">14:00:00</option>
       </select>
     </div>
+
     <div>
       <label for="closing_time">Heure de fermeture</label>
       <select name="closing_time" id="closing_time" required>

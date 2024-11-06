@@ -9,3 +9,4 @@ router.get("/users/add", cw(usersController.addUserPage));
 router.post("/users/add", cw(usersController.addUser));
 router.get("/users/:id", cw(usersController.getOneUser));
 router.post("/users/del/:id", cw(usersController.delUser));
+router.post("/users/:id", cw(usersController.updateUser));

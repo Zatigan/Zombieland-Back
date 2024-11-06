@@ -1,4 +1,6 @@
 import {User} from "../../models/index.js";
+import Joi from 'joi';
+import argon2 from 'argon2';
 
 export async function userPage(req, res){
   const users = await User.findAll({ order: [['id', 'ASC']] });
@@ -103,3 +105,15 @@ export async function delUser(req, res){
   await User.destroy({ where: { id: userId } });
   res.status(201).redirect('/admin/users');
 }
+
+export async function updateUser(req, res){
+
+const userId = Number.parseInt(req.params.id);  
+const user = await User.findByPk(userId);
+
+const {firstname, lastname, email} = req.body;
+const userData = {firstname, lastname, email};
+
+const updatedUser = await user.update(userData);
+res.redirect('/admin/users?success=true');}
+

@@ -1,12 +1,12 @@
 import { Router } from "express";
-import * as attractionsRouter from "../../controllers/adminControllers/attraction.controller.js";
+import * as attractionsController from "../../controllers/adminControllers/attraction.controller.js";
 import imageUpload from "./multer.config.js";
-
+import { controllerWrapper as cw } from "./controller.wrapper.js";
 
 export const router = Router();
 
-router.get("/attractions", attractionsRouter.attractionPage)
-router.get("/attractions/add", attractionsRouter.addAttractionPage)
-router.post("/attractions/add", imageUpload, attractionsRouter.addAttraction)
-router.post("/attractions/del/:id", imageUpload, attractionsRouter.delAttraction)
-router.get("/attractions/:id", attractionsRouter.getOneAttraction)
+router.get("/attractions", cw(attractionsController.attractionPage))
+router.get("/attractions/add", cw(attractionsController.addAttractionPage))
+router.post("/attractions/add", imageUpload, cw(attractionsController.addAttraction))
+router.post("/attractions/del/:id", imageUpload, cw(attractionsController.delAttraction))
+router.get("/attractions/:id", cw(attractionsController.getOneAttraction))

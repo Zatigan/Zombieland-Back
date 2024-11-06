@@ -15,13 +15,15 @@ export async function addAttractionPage(req, res) {
   res.render("newAttraction");
 }
 export async function addAttraction(req, res) {
-  console.log('Contenu de req.file:', req.files);
   
   const image = req.files['image'][0].filename;
   const imageSaved = `/img/${image}`;
   const caroussel1 = req.files['caroussel1'][0].filename;
+  const caroussel1Saved =  `/img/${caroussel1}`;
   const caroussel2 = req.files['caroussel2'][0].filename;
+  const caroussel2Saved =  `/img/${caroussel2}`;
   const caroussel3 = req.files['caroussel3'][0].filename;
+  const caroussel3Saved =  `/img/${caroussel3}`;
   
   const {name, description_short, description_long, opening_time, closing_time, disable_access, weather_hazard, height_restriction, health_hazard} = req.body
 
@@ -38,18 +40,15 @@ export async function addAttraction(req, res) {
   weather_hazard,
   height_restriction,
   health_hazard,
-  caroussel1,
-  caroussel2,
-  caroussel3
+  caroussel1: caroussel1Saved,
+  caroussel2: caroussel2Saved,
+  caroussel3: caroussel3Saved
  }
 
 
 
-  const createAttraction = await Attraction.create(attractionData);
-  console.log('Nouvelle attraction créée:', createAttraction);
-  
-
-  res.redirect('/admin/attractions');
+ await Attraction.create(attractionData);
+ res.redirect('/admin/attractions');
 
 }
 

@@ -1,0 +1,96 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Ajouter une attraction</h1>
+
+  <form action="/admin/attractions/add" method="POST" enctype="multipart/form-data"  class="form-attraction">
+    <div>
+      <label for="name">Nom de l'attraction</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="description_short">Description courte</label>
+      <textarea rows= "6" cols= "50" id="description_short" name="description_short" required></textarea>
+    </div>
+    <div>
+      <label for="description_long">Description longue</label>
+      <textarea rows= "10" cols= "100" id="description_long" name="description_long" required></textarea>
+    </div>
+    <div>
+      <label for="opening_time">Heure d'ouverture</label>
+      <select name="opening_time" id="opening_time" required>
+        <option value="09:00:00" >09:00:00</option>
+        <option value="10:00:00">10:00:00</option>
+        <option value="11:00:00">11:00:00</option>
+        <option value="12:00:00">12:00:00</option>
+        <option value="13:00:00">13:00:00</option>
+        <option value="14:00:00">14:00:00</option>
+      </select>
+    </div>
+    <div>
+      <label for="closing_time">Heure de fermeture</label>
+      <select name="closing_time" id="closing_time" required>
+        <option value="17:00:00">17:00:00</option>
+        <option value="18:00:00">18:00:00</option>
+        <option value="19:00:00">19:00:00</option>
+        <option value="20:00:00">20:00:00</option>
+        <option value="21:00:00">21:00:00</option>
+        <option value="22:00:00">22:00:00</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="disable_access">Accessibilité PMR</label>
+      <select name="disable_access" id="disable_access" required>
+        <option value="Non accessible aux personnes à mobilité réduite." >Non accessible aux personnes à mobilité réduite.</option>
+        <option value="Accessible aux personnes à mobilité réduite." >Accessible aux personnes à mobilité réduite.</option>
+        <option value="Accessible aux personnes à mobilité réduite (parcours adapté)." >Accessible aux personnes à mobilité réduite (parcours adapté).</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="weather_hazard">Conditions météo</label>
+      <textarea cols="50" rows="1" type="text" id="weather_hazard" name="weather_hazard" required></textarea>
+    </div>
+
+
+    <div>
+      <label for="height_restriction">Restriction de taille</label>
+      <select name="height_restriction" id="height_restriction" required>
+        <option value=0 >0</option>
+        <option value=1.10 >1.10</option>
+        <option value=1.20 >1.20</option>
+        <option value=1.30 >1.30</option>
+        <option value=1.40 >1.40</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="health_hazard">Restriction de santé</label>
+      <textarea cols="50" rows="1" type="text" id="health_hazard" name="health_hazard" required></textarea>
+    </div>
+
+    <div>
+      <label for="image">Photo principale</label>
+      <input type="file" name="image" id="image" accept=".webp, .png, .jpeg" required>
+    </div>
+
+    <div>
+      <label for="caroussel1">Photo 2</label>
+      <input type="file" name="caroussel1" id="caroussel1" accept=".webp, .png, .jpeg" >
+    </div>
+
+    <div>
+      <label for="caroussel2">Photo 3</label>
+      <input type="file" name="caroussel2" id="caroussel2" accept=".webp, .png, .jpeg" >
+    </div>
+
+    <div>
+      <label for="caroussel3">Photo 4</label>
+      <input type="file" name="caroussel3" id="caroussel3" accept=".webp, .png, .jpeg" >
+    </div>
+
+    <button type="submit">Enregistrer</button>
+  </form>
+</main>
+<%- include('partials/footer') %>

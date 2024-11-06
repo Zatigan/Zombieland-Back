@@ -2,6 +2,7 @@
 
 <main>
   <h1>Liste des attractions</h1>
+  <a class="btn-add" href="/admin/attractions/add">Ajouter une attraction</a>
   <table>
     <tr>
     <th>ID</th>
@@ -16,8 +17,11 @@
           <td><%= attraction.name %></td>
           <td><img class="img-attraction" src="<%= attraction.image %>" alt="<%= attraction.name %>"></td>
           <td><a href="/admin/attractions/<%= attraction.id %>">Modifier</a></td>
-          <td><a href="/admin/attractions/<%= attraction.id %>">Supprimer</a></td>
-  
+          <td>
+            <form action="/admin/attractions/del/<%= attraction.id %>" method="POST">
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
         </tr>
       <% }) %>
   </table>

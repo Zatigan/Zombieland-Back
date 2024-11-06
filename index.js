@@ -32,7 +32,7 @@ app.use(rateLimit({
   limit: 100, // Limit each IP to 100 requests per `window` (here, per minute)
 }));
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json({limit: "10kb"}));
 
 

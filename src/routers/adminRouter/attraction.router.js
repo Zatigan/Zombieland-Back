@@ -8,5 +8,6 @@ export const router = Router();
 router.get("/attractions", cw(attractionsController.attractionPage))
 router.get("/attractions/add", cw(attractionsController.addAttractionPage))
 router.post("/attractions/add", imageUpload, cw(attractionsController.addAttraction))
-router.post("/attractions/del/:id", imageUpload, cw(attractionsController.delAttraction))
+router.post("/attractions/del/:id", cw(attractionsController.delAttraction))
 router.get("/attractions/:id", cw(attractionsController.getOneAttraction))
+router.patch("/attractions/:id", cw(attractionsController.updateAttraction))

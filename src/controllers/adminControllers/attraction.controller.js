@@ -1,20 +1,32 @@
-import {Attraction} from "../../models/index.js"
+import {Attraction, Category} from "../../models/index.js"
 
 export async function attractionPage(req,res) {
   const attractions = await Attraction.findAll({ include: "categories", order: [['id', 'ASC']] });
-  res.render("attractions", {attractions});
+  const successMessage = req.query.success;
+  res.render("attractions", {attractions, successMessage});
 };
 
 export async function getOneAttraction(req, res) {
   const attractionId = parseInt(req.params.id)
-  const attraction = await Attraction.findByPk(attractionId);
+  const attraction = await Attraction.findByPk(attractionId, {
+    include: "categories"
+  });
   res.render("attraction", {attraction});
 };
+
+export async function updateAttraction(req, res){
+  res.redirect('/admin/attractions?success=true');
+}
 
 export async function addAttractionPage(req, res) {
   res.render("newAttraction");
 }
 export async function addAttraction(req, res) {
+
+  const categoryselected = req.body.category
+  const categoryBdd = await Category.findOne(({ where: { name: categoryselected } }));
+
+  const categoryId = categoryBdd.id;
   
   const image = req.files['image'][0].filename;
   const imageSaved = `/img/${image}`;
@@ -47,8 +59,9 @@ export async function addAttraction(req, res) {
 
 
 
- await Attraction.create(attractionData);
- res.redirect('/admin/attractions');
+ const newAttraction = await Attraction.create(attractionData);
+ await newAttraction.addCategory(categoryBdd);
+ res.redirect('/admin/attractions?success=true');
 
 }
 
@@ -56,5 +69,5 @@ export async function delAttraction(req, res) {
   const attractionId = req.params.id
   await Attraction.destroy({ where: { id: attractionId } });
 
-  res.status(201).redirect('/admin/attractions');
+  res.status(201).redirect('/admin/attractions?success=true');
 }

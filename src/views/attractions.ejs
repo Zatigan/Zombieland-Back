@@ -2,6 +2,11 @@
 
 <main>
   <h1>Liste des attractions</h1>
+  <% if (successMessage) { %>
+    <div class="alert alert-success">
+     Votre demande a bien été prise en compte
+    </div>
+  <% } %>
   <a class="btn-add" href="/admin/attractions/add">Ajouter une attraction</a>
   <table>
     <tr>

@@ -114,3 +114,31 @@ input, textarea, select{
   align-self: flex-end;
   text-decoration: none;
 }
+
+.alert-success {
+  background-color: #63878C;
+  color: #f5fcfc;
+  padding: 1vh 2vh;
+  width: fit-content;
+  border-radius: 10px;
+  animation: fadeOut 3s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.form-attraction img {
+  width: 5%;
+  border-radius: 10px;
+}

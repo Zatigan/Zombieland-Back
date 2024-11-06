@@ -8,6 +8,18 @@
       <input type="text" id="name" name="name" value="<%= attraction.name %>" required>
     </div>
     <div>
+      <label for="category">Catégorie</label>
+      <select name="category" id="category" required>
+        <option value="<%= attraction.categories[0].name%>"><%= attraction.categories[0].name%></option>
+        <% const options5 = ["Montagnes russes", "Attractions aquatiques", "Maisons hantées", "Expériences interactives", "Spectacles"]%>
+        <% options5.forEach(optionDetail => { %>
+          <% if (optionDetail !== attraction.categories[0].name) { %>
+            <option value="<%= optionDetail %>"><%= optionDetail %></option>
+          <% } %>
+          <% }) %>
+        </select>
+    </div>
+    <div>
       <label for="description_short">Description courte</label>
       <textarea rows= "6" cols= "50" id="description_short" name="description_short" required><%= attraction.description_short %></textarea>
     </div>
@@ -74,27 +86,32 @@
 
     <div>
       <label for="weather_hazard">Restriction de santé</label>
+      
       <textarea cols="50" rows="1" type="text" id="weather_hazard" name="weather_hazard" required><%= attraction.weather_hazard %></textarea>
     </div>
 
     <div>
       <label for="image">Photo principale</label>
-      <input type="file" name="upload_file" id="image" accept=".webp .png" required>
+      <img src="<%= attraction.image %>" alt="<%= attraction.name %>-1">
+      <input type="file" name="upload_file" id="image" accept=".webp .png" >
     </div>
 
     <div>
       <label for="caroussel1">Photo 2</label>
-      <input type="file" name="upload_file" id="caroussel1" accept=".webp .png" required>
+      <img src="<%= attraction.caroussel1 %>" alt="<%= attraction.name %>-2">
+      <input type="file" name="upload_file" id="caroussel1" accept=".webp .png" >
     </div>
 
     <div>
       <label for="caroussel2">Photo 3</label>
-      <input type="file" name="upload_file" id="caroussel2" accept=".webp .png" required>
+      <img src="<%= attraction.caroussel2 %>" alt="<%= attraction.name %>-3">
+      <input type="file" name="upload_file" id="caroussel2" accept=".webp .png" >
     </div>
 
     <div>
       <label for="caroussel3">Photo 4</label>
-      <input type="file" name="upload_file" id="caroussel3" accept=".webp .png" required>
+      <img src="<%= attraction.caroussel3 %>" alt="<%= attraction.name %>-4">
+      <input type="file" name="upload_file" id="caroussel3" accept=".webp .png" >
     </div>
 
     <button type="submit">Modifier</button>

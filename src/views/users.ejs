@@ -2,6 +2,11 @@
 
 <main>
   <h1>Liste des utilisateurs</h1>
+  <% if (successMessage) { %>
+    <div class="alert alert-success">
+     Votre demande a bien été prise en compte
+    </div>
+  <% } %>
   <a class="btn-add" href="/admin/users/add">Ajouter un utilisateur</a>
   <table>
     <tr>

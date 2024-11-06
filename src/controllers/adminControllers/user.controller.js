@@ -4,7 +4,8 @@ import argon2 from 'argon2';
 
 export async function userPage(req, res){
   const users = await User.findAll({ order: [['id', 'ASC']] });
-  res.render("users", {users});
+  const successMessage = req.query.success;
+  res.render("users", {users, successMessage});
 };
 
 export async function getOneUser(req, res){
@@ -94,10 +95,9 @@ if (!firstname || !lastname || !email || !password) {
   // res.status(200).json(createUser)
   //delete createUser.password;
   
-  return res.status(201).json({
-    message: 'User created. Please login to get your access token.',
-  });
   
+  return res.redirect('/admin/users?success=true');
+
   }
 
 export async function delUser(req, res){

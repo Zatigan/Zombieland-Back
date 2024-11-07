@@ -27,7 +27,7 @@ export async function getReservationPage(req, res) {
 export async function addReservation(req, res) {
 
 // Récupère les champs nécessaires du corps de la requête
-const { date, ticket, price } = req.body;
+const { date, ticket, price, user_id } = req.body;
 
  // Vérifie que les champs 'date' et 'ticket' sont bien présents
  if (!date) {
@@ -71,7 +71,8 @@ const reservationData = {
   ref_number: newRefNumber,
   date,
   ticket,
-  total_price: price
+  total_price: price,
+  user_id
 }
 
 const createReservation = await Reservation.create(reservationData)

@@ -28,6 +28,23 @@ User.init ({
     type: DataTypes.STRING(255),
     allowNull: true,
   },
+  pseudo: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+    unique: true,
+  },
+  adress: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
+  postal_code: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
+  country: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  }
 }, {
   sequelize,
   tableName: 'user',

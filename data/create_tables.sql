@@ -11,6 +11,10 @@ CREATE TABLE "user" (
     "email" VARCHAR(100) UNIQUE NOT NULL,
     "password" VARCHAR(255) NOT NULL, 
     "profil_image" VARCHAR(255),
+    "pseudo" VARCHAR(50),
+    "adress" VARCHAR(50),
+    "postal_code" VARCHAR(20),
+    "country"VARCHAR(50),
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ
 );

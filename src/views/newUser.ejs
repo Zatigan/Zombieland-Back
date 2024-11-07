@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Ajouter un utilisateur</h1>
+
+  <form action="/admin/users/add" method="POST" class="form-user">
+    <div>
+      <label for="firstname">Prénom</label>
+      <input type="text" id="firstname" name="firstname" required>
+    </div>
+    <div>
+      <label for="lastname">Nom</label>
+      <input type="text" id="lastname" name="lastname" required>
+    </div>
+    <div>
+      <label for="email">Adresse email</label>
+      <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit" class="confirm-new-user-btn">Enregistrer</button>
+  </form>
+</main>
+
+<%- include('partials/footer') %>

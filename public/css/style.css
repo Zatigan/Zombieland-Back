@@ -1,0 +1,158 @@
+body{
+  display: flex;
+  width: 100%;
+  font-size: large;
+}
+
+h1{
+color: #63878C;
+}
+
+header {
+  background-color: #0d0609 ;
+  height: 100vh;
+  width: 25vh;
+  position: fixed;
+}
+nav{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  padding: 2vh;
+}
+
+header a{
+  text-decoration: none;
+  color: #f5fcfc;
+}
+
+header a:hover{
+  color: #63878C;
+}
+
+.lien-menu {
+  font-weight: 600;
+}
+
+.img-attraction{
+  width: 10vh;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  padding: 5vh;
+  margin-left: 25vh;
+  gap: 5vh;
+  width: 75%;
+}
+
+table{
+
+  padding: 5vh;
+  border-collapse: collapse;
+
+}
+
+th, td {
+  padding: 1vh 2vh;
+  text-align: left;
+}
+
+th{
+  border-bottom: 2px solid #243037;
+  margin: 1vh;
+}
+
+td{
+  border-bottom: 1px solid #243037;
+  margin: 1vh;
+}
+
+table a {
+  color: #63878C;
+}
+
+.form-attraction{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.form-attraction div{
+  display: flex;
+  gap: 2vh;
+  align-items: center;
+}
+
+.form-attraction label{
+  width: 15%;
+}
+
+.form-attraction button, td button{
+  width: fit-content;
+  padding: 1vh 3vh;
+  background-color: #243037;
+  color: #f5fcfc;
+  border-radius: 10px;
+}
+
+input, textarea, select{
+  border-radius: 10px;
+  border: #63878C 1px solid;
+  padding: 1vh 2vh;
+  background-color: white;
+  width: 100%;
+}
+
+.btn-add{
+  background-color: #243037;
+  color: #f5fcfc;
+  padding: 1vh 3vh;
+  border-radius: 10px;
+  width: fit-content;
+  align-self: flex-end;
+  text-decoration: none;
+}
+
+.confirm-new-user-btn{
+  margin-top: 1rem;
+  background-color: #243037;
+  color: #f5fcfc;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+.confirm-update-user-btn{
+  margin-top: 1rem;
+  background-color: #243037;
+  color: #f5fcfc;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+.alert-success {
+  background-color: #63878C;
+  color: #f5fcfc;
+  padding: 1vh 2vh;
+  width: fit-content;
+  border-radius: 10px;
+  animation: fadeOut 3s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.form-attraction img {
+  width: 5%;
+  border-radius: 10px;
+}

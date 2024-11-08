@@ -46,6 +46,7 @@ app.use("/admin", adminRouter);
 //app.use(router);
 //TODO faire la doc (1 demandée min "je crois")
 app.use("/", (req, res) => {
+  console.log('req.url', req.url);
   res.send("<h1>Bienvenue sur l'API de ZombieLand</h1>");
 });
 

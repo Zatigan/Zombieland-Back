@@ -40,9 +40,10 @@ export async function reservationByProfile(req, res) {
     res.json(userReservation);
 }
 
-export default myProfile;
+// export default myProfile;
 
 export async function delProfile(req, res) {
+  console.log('je passe là')
   const user = await User.findByPk(parseInt(req.user.id));
 
   if (!user) {
@@ -50,5 +51,5 @@ export async function delProfile(req, res) {
   }
   
   await user.destroy();
-  res.status(204).end();
+  res.status(200);
 }

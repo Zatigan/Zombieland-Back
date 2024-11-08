@@ -8,9 +8,9 @@ export const router = Router();
 
 router.get("/profile", userLoggedIn, cw(userRouter.myProfile));
 router.get("/profile/reservation",userLoggedIn, cw(userRouter.reservationByProfile))
+router.patch("/profile/update",userLoggedIn, cw(userRouter.updateUser));
+router.delete("/profile/del", userLoggedIn, cw(userRouter.delProfile));
 
 router.get("/user", cw(userRouter.getAllUsers));
 router.get("/user/:id", cw(userRouter.getOneUser));
 
-// A voir pour change la route et modifier l'utilisateur via le token
-router.patch("/user/:id", cw(userRouter.updateUser));

@@ -39,8 +39,8 @@ export async function reservationByProfile(req, res) {
 }
 
 export async function updateUser(req, res) {
-  const userId = parseInt(req.params.id)
-
+  
+  const userId = parseInt(req.user.id)
   if(isNaN(userId)) {
     return res.status(404).json({ error: `User not found. Please verify the provided id.`});
   }
@@ -67,3 +67,13 @@ export async function updateUser(req, res) {
   res.json(updateUser);
 }
 
+export async function delProfile(req, res) {
+  const user = await User.findByPk(parseInt(req.user.id));
+
+  if (!user) {
+    return res.status(404).json({ "error": "Utilisateur non trouvé" });
+  }
+  
+  await user.destroy();
+  res.status(204).end();
+}

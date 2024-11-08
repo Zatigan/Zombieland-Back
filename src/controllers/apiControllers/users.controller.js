@@ -43,7 +43,6 @@ export async function reservationByProfile(req, res) {
 // export default myProfile;
 
 export async function delProfile(req, res) {
-  console.log('je passe là')
   const user = await User.findByPk(parseInt(req.user.id));
 
   if (!user) {
@@ -53,3 +52,19 @@ export async function delProfile(req, res) {
   await user.destroy();
   res.status(200);
 }
+
+export async function delReservationByProfile(req, res) {
+  console.log('Requête DELETE reçue sur /profile/reservation/del');
+  const {reservationId}  = req.body;
+  console.log("ID de la réservation à supprimer :", reservationId);
+
+  const userReservation = await Reservation.findByPk(reservationId);
+
+
+  if (!userReservation) {
+    return res.status(404).json({ "error": "Réservation non trouvée" });
+  }
+
+await userReservation.destroy();
+res.status(200).json({ message: "Réservation supprimée avec succès" });
+} 

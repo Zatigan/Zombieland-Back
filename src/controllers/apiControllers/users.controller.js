@@ -41,3 +41,14 @@ export async function reservationByProfile(req, res) {
 }
 
 export default myProfile;
+
+export async function delProfile(req, res) {
+  const user = await User.findByPk(parseInt(req.user.id));
+
+  if (!user) {
+    return res.status(404).json({ "error": "Utilisateur non trouvé" });
+  }
+  
+  await user.destroy();
+  res.status(204).end();
+}

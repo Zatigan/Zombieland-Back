@@ -14,7 +14,8 @@ CREATE TABLE "user" (
     "pseudo" VARCHAR(50),
     "adress" VARCHAR(50),
     "postal_code" VARCHAR(20),
-    "country"VARCHAR(50),
+    "city"VARCHAR(50),
+    "role" TEXT DEFAULT 'member',
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ
 );

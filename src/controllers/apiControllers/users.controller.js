@@ -51,7 +51,7 @@ export async function updateUser(req, res) {
     return res.status(404).json({ error: "User not found. Please verify the provided id." });
   }
   
-  const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, country } = req.body; 
+  const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
 
   const updateUser = await user.update({
     firstname: firstname || user.firstname,
@@ -61,7 +61,7 @@ export async function updateUser(req, res) {
     pseudo: pseudo || user.pseudo,
     adress: adress || user.adress,
     postal_code: postal_code || user.postal_code,
-    country: country || user.country,
+    city: city || user.city,
   });
 
   res.json(updateUser);

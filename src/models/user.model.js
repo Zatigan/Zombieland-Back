@@ -41,7 +41,7 @@ User.init ({
     type: DataTypes.STRING(50),
     allowNull: true,
   },
-  country: {
+  city: {
     type: DataTypes.STRING(50),
     allowNull: true,
   }

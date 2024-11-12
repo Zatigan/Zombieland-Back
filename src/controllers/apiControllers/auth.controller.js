@@ -22,6 +22,14 @@ export async function createUser(req, res) {
     .pattern(new RegExp('(?=.*[a-z])')) // Au moins une minuscule
     .pattern(new RegExp('(?=.*[A-Z])')) // Au moins une majuscule
     .pattern(new RegExp('(?=.*[0-9])')) // Au moins un chiffre
+    .required(),
+    
+    confirmedPassword: Joi.string()
+    .min(12)
+    .max(255)
+    .pattern(new RegExp('(?=.*[a-z])')) // Au moins une minuscule
+    .pattern(new RegExp('(?=.*[A-Z])')) // Au moins une majuscule
+    .pattern(new RegExp('(?=.*[0-9])')) // Au moins un chiffre
     .required(), 
     //profil_image: Joi.string().optional()
   })
@@ -32,11 +40,11 @@ export async function createUser(req, res) {
   }
   
   // On récupère les champs dont on va se servir
-  const { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password, confirmedPassword } = req.body;
   
 
 // On vérifie qu'aucun champ n'est manquant / vide
-if (!firstname || !lastname || !email || !password) {
+if (!firstname || !lastname || !email || !password || !confirmedPassword || password !== confirmedPassword) {
   res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
   return; 
 }

@@ -15,7 +15,7 @@ export async function createUser(req, res) {
     .min(1)
     .max(50),
     
-    email: Joi.string().email().required()   /*email validator ?*/,
+    email: Joi.string().email().required()   /* ajout d'email validator pour vérifier les mails soumis ?*/,
     //{ minDomainSegments: 3, tlds: { allow: ['com', 'net', 'io']} }
   
     password: Joi.string()
@@ -40,7 +40,7 @@ export async function createUser(req, res) {
   if (error) {
     return res.status(400).json({ error: error.message });
   }
-  
+
   // On récupère les champs dont on va se servir
   const { firstname, lastname, email, password, confirmedPassword } = req.body;
   
@@ -131,23 +131,49 @@ export async function lostPassword (req, res) {
     return;
   }
 
-  //* Récuperation des infos dans le req.body
+  //* Sécurité en définissant la nature des champs qui vont être soumis par l'utilisateur
+  const userSchema = Joi.object({ 
+    firstname: Joi.string().required().min(3).max(50),
+    
+    lastname: Joi.string()
+    .required()
+    .min(1)
+    .max(50),
+    
+    email: Joi.string().email().required()
+  });
+
+  //* Tout passe à la moulinette de Joi
+  const { error } = userSchema.validate(req.body)
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  //* Vérification qu'aucun champ n'est manquant
+  if (!firstname || !lastname || !email) {
+    res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+    return; 
+  }
+
+  //* Récuperation des infos dans le req.body 
+  // const {firstname, lastname, email}: {firstname: string, lastname: string, email: string} = req.body; ==> la ligne ci-dessous correspond à du TS qui permet d'annoncer le type de chacune des variables destructurées
   const {firstname, lastname, email} = req.body;
 
   //* Recherche en BDD l'utilisateur en question qui a toutes ses infos
   const user = await User.findOne({
-    where: {firstname: firstname, lastname: lastname, email: email}});
+    where: {firstname: firstname, lastname: lastname, email: email}
+  });
 
   //* Test Insomnia pour voir si ça marche, à supprimer plus tard
   if (user) {
     res.status(200).json({message: "Coucou"});
-  }
+  };
   
   //* Si jamais l'utilisateur n'existe pas, erreur
   if (user == null || !user) {
-      res.status(422).json({message: "Cet utilisateur n'existe pas"});
-      return;
-    }
+    res.status(422).json({message: "Cet utilisateur n'existe pas"});
+    return;
+  };
 
   //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
   const randomString = cryptoRandomString({length:64, type:'alphanumeric'});

@@ -178,6 +178,6 @@ export async function lostPassword (req, res) {
   //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
   const randomString = cryptoRandomString({length:64, type:'alphanumeric'});
 
-  user.password_reset_token = temporaryPassword;
+  user.password_reset_token = randomString;
   await user.save();
 };

@@ -9,7 +9,8 @@
     "dev": "node --watch index.js",
     "db:create": "psql -U zombieland -d zombieland -f ./data/create_tables.sql",
     "db:populate": "psql -U zombieland -d zombieland -f ./data/populate_tables.sql",
-    "db:reset": "npm run db:create && npm run db:populate"
+    "db:migrate": "psql -U zombieland -d zombieland -f ./data/migrate_role_table.sql",
+    "db:reset": "npm run db:create && npm run db:populate && npm run db:migrate"
   },
   "keywords": [],
   "author": "",

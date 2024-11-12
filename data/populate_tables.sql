@@ -64,11 +64,18 @@ VALUES
 INSERT INTO "user" 
 ("firstname", "lastname", "email", "password")
 VALUES
+    ('Micka','biloute','micka.biloute@oclock.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$31+9ddR7az3RqMJ7gCf62Q'),
+    ('Pierre','TheLeadDev','pierre.theboss@oclock.io','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$zO5RB9nsuGaAiTYytaVD8g'),
+    ('Bruno', 'Magic', 'magic.bruno@gmail.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$MQWkEtQjC2tec8vDtkCxhA'),
+    ('Laura', 'Croco','laura.croco@gmail.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$MQWkEtQjC2tec8vDtkCxhA'),
     ('Alice', 'Martin', 'alice.martin@example.com', 'password123'),
     ('Bob', 'Dupont', 'bob.dupont@example.com', 'password456'),
     ('Claire', 'Durand', 'claire.durand@example.com', 'password789'),
     ('David', 'Moreau', 'david.moreau@example.com', 'password101');
-
+-- Note : mdp de Laura argon2id = Password123456
+-- Note : mdp de Buno argon2id = Azerty123456
+-- Note : mdr de Pierre argon2id = Azerty456789
+-- Note : mdp de Micka argon2id = Azert123456789
 
 
 INSERT INTO "reservation"

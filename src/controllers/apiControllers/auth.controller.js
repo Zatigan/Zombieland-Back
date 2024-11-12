@@ -2,6 +2,8 @@ import Joi from "joi";
 import { User } from "../../models/index.js";
 import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
+import cryptoRandomString from "crypto-random-string";
+
 
 export async function createUser(req, res) { 
 
@@ -79,9 +81,9 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
     message: 'User created. Please login to get your access token.',
   });
   
-  }
+  };
   
-  export async function loginUser(req, res) {
+export async function loginUser(req, res) {
     
     // On recupère les données email et password dans le body
     const {email, password} = req.body;
@@ -121,7 +123,31 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
   
   return res.json({ accessToken, user : userSafe });
   
+  };
+
+export async function lostPassword (req, res) {
+
+  //* Récuperation des infos dans le req.body
+  const {firstname, lastname, email} = req.body;
+
+  //* Recherche en BDD l'utilisateur en question qui a toutes ses infos
+  const user = await User.findOne({
+    where: {firstname: firstname, lastname: lastname, email: email}});
+
+  //* Test Insomnia pour voir si ça marche, à supprimer plus tard
+  if (user) {
+    res.status(200).json({message: "Coucou"});
   }
+  
+  //* Si jamais l'utilisateur n'existe pas, erreur
+  if (user == null || !user) {
+      res.status(422).json({message: "Cet utilisateur n'existe pas"});
+      return;
+    }
 
+  //* Création d'un mot de passe temporaire
+  const randomString = cryptoRandomString({length:64, type:'alphanumeric'});
 
-
+  user.password_reset_token = temporaryPassword;
+  await user.save();
+};

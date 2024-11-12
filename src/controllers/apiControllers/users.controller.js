@@ -34,13 +34,38 @@ export async function reservationByProfile(req, res) {
     where: {
       user_id: req.user.id,
     },
-  });
-
-             
+  });          
     res.json(userReservation);
 }
 
-// export default myProfile;
+export async function updateUser(req, res) {
+  
+  const userId = parseInt(req.user.id)
+  if(isNaN(userId)) {
+    return res.status(404).json({ error: `User not found. Please verify the provided id.`});
+  }
+
+  const user = await User.findByPk(userId);
+
+  if(!userId) {
+    return res.status(404).json({ error: "User not found. Please verify the provided id." });
+  }
+  
+  const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
+
+  const updateUser = await user.update({
+    firstname: firstname || user.firstname,
+    lastname: lastname || user.lastname,
+    email: email || user.email,
+    profil_image: profil_image || user.profil_image,
+    pseudo: pseudo || user.pseudo,
+    adress: adress || user.adress,
+    postal_code: postal_code || user.postal_code,
+    city: city || user.city,
+  });
+
+  res.json(updateUser);
+}
 
 export async function delProfile(req, res) {
   const userId = req.user.id

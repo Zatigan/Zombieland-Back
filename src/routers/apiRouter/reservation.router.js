@@ -7,4 +7,4 @@ import userLoggedIn from "../../middleware/userLoggedIn.js";
 export const router = Router();
 
 router.get("/reservation", cw(reservationController.getReservationPage));
-router.post("/reservation",userLoggedIn, cw(reservationController.addReservation));
+router.post("/reservation", cw(reservationController.addReservation));

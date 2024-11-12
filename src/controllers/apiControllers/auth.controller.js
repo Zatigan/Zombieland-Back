@@ -127,6 +127,10 @@ export async function loginUser(req, res) {
 
 export async function lostPassword (req, res) {
 
+  if(req.method !== 'POST') {
+    return;
+  }
+
   //* Récuperation des infos dans le req.body
   const {firstname, lastname, email} = req.body;
 
@@ -145,7 +149,7 @@ export async function lostPassword (req, res) {
       return;
     }
 
-  //* Création d'un mot de passe temporaire
+  //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
   const randomString = cryptoRandomString({length:64, type:'alphanumeric'});
 
   user.password_reset_token = temporaryPassword;

@@ -43,7 +43,8 @@ export async function reservationByProfile(req, res) {
 // export default myProfile;
 
 export async function delProfile(req, res) {
-  const user = await User.findByPk(parseInt(req.user.id));
+  const userId = req.user.id
+  const user = await User.findByPk(parseInt(userId));
 
   if (!user) {
     return res.status(404).json({ "error": "Utilisateur non trouvé" });

@@ -1,5 +1,5 @@
 import { User } from "../../models/index.js";
-import { Reservation } from "../../models/index.js";
+import { Reservation, sequelize } from "../../models/index.js";
 //* ====================== Functions à mettre plus tard dans l'adminControllers ======================
 
 export async function getAllUsers(req,res) {
@@ -68,7 +68,8 @@ export async function updateUser(req, res) {
 }
 
 export async function delProfile(req, res) {
-  const user = await User.findByPk(parseInt(req.user.id));
+  const userId = req.user.id
+  const user = await User.findByPk(parseInt(userId));
 
   if (!user) {
     return res.status(404).json({ "error": "Utilisateur non trouvé" });
@@ -93,3 +94,53 @@ export async function delReservationByProfile(req, res) {
 await userReservation.destroy();
 res.status(200).json({ message: "Réservation supprimée avec succès" });
 } 
+
+export async function updateReservationByProfile(req, res) {
+
+// recup l'id de la réservation et la réservation concernée
+
+const {reservationId, date, ticket, price }  = req.body;
+const userReservation = await Reservation.findByPk(reservationId);
+
+if (!userReservation) {
+  return res.status(404).json({ "error": "Réservation non trouvée" });
+}
+
+
+ // Vérifie que les champs 'date' et 'ticket' sont bien présents
+ if (!date) {
+  return res.status(400).json({ error: "La date est requise pour la réservation." });
+}
+if (!ticket || ticket <= 0) {
+  return res.status(400).json({ error: "Le nombre de billets doit être supérieur à zéro." });
+}
+
+// Récupère le nombre total de billets déjà réservés pour la date spécifiée
+const dateAvailability = await Reservation.findOne({
+  attributes: [
+    'date',
+    [sequelize.fn('SUM', sequelize.col('ticket')), 'tickets_reserved']
+  ],
+  where: { date },
+  group: ['date'],
+  raw: true,
+});
+
+const ticketsReserved = dateAvailability ? parseInt(dateAvailability.tickets_reserved): 0;
+const ticketsAvailable = 100 - ticketsReserved;
+
+if (ticket > ticketsAvailable)
+  {
+    return res.status(400).json({ 
+      error: `Il ne reste que ${ticketsAvailable} billets disponibles pour cette date.` 
+    });
+  }
+
+
+  const updateReservation = await userReservation.update({
+    date: date || userReservation.date,
+    ticket: ticket || userReservation.ticket,
+    total_price: price || userReservation.price
+  })
+  res.json(updateReservation);
+}

@@ -10,7 +10,12 @@ CREATE TABLE "user" (
     "lastname" VARCHAR(50) NOT NULL,
     "email" VARCHAR(100) UNIQUE NOT NULL,
     "password" VARCHAR(255) NOT NULL, 
-    q
+    "profil_image" VARCHAR(255),
+    "pseudo" VARCHAR(50),
+    "adress" VARCHAR(50),
+    "postal_code" VARCHAR(20),
+    "city"VARCHAR(50),
+    "role" TEXT DEFAULT 'member',
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ
 );

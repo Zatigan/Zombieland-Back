@@ -3,6 +3,7 @@ import { User } from "../../models/index.js";
 import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
 import cryptoRandomString from "crypto-random-string";
+import { render } from "ejs";
 
 
 export async function createUser(req, res) { 
@@ -125,7 +126,7 @@ export async function loginUser(req, res) {
   
   };
 
-export async function lostPassword (req, res) {
+export async function forgottenPassword (req, res) {
 
   if(req.method !== 'POST') {
     return;
@@ -178,6 +179,42 @@ export async function lostPassword (req, res) {
   //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
   const randomString = cryptoRandomString({length:64, type:'alphanumeric'});
 
-  user.password_reset_token = randomString;
-  await user.save();
+  //* Enregistrement de la randomString au champ password_reset_token dans la bdd
+  User.password_reset_token = randomString;
+  await User.save();
+
+  //* Hachage de l'adresse mail (peut-être que je devrai hasher le mail de req.body...)
+  const hashedMail = await argon2.hash(User.email);
+
+  //* App_url à définir dans le .env
+  const url = `${Env.APP_URL}/reset-password/${hashedMail}?signature=${randomString}&mail=${hashedMail}`;
+  console.log(url)
+
+  try {
+    const html = render(
+      ForgotPasswordEmail({
+        params: {
+          firstname: User.firstname,
+          lastname: User.lastname,
+          email: User.email,
+          url: url,
+        },
+      })
+    );
+
+  //* Envoi de l'email à l'utilisateur
+  await sendEmail(req.body.email, "Reset Password", html);
+  return res.json({
+    status: 200,
+    message: "Email successfully sent. Please check your email.",
+  });
+
+  } catch (error) {
+
+    console.log("the error is", error);
+    return res.json({
+      status: 500,
+      message: "Something went wrong, please try again!",
+    });
+  }
 };

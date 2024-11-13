@@ -44,6 +44,14 @@ User.init ({
   city: {
     type: DataTypes.STRING(50),
     allowNull: true,
+  },
+  password_reset_token: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  password_reset_expires: {
+    type: DataTypes.TEXT,
+    allowNull: true,
   }
 }, {
   sequelize,

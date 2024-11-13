@@ -16,8 +16,8 @@ CREATE TABLE "user" (
     "postal_code" VARCHAR(20),
     "city" VARCHAR(50),
     "role" TEXT DEFAULT 'member',
-    "password_reset_token" VARCHAR(50),
-    "password_reset_expires" VARCHAR(50),
+    "password_reset_token" TEXT,
+    "password_reset_expires" TEXT,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ
 );

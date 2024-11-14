@@ -44,6 +44,10 @@ User.init ({
   city: {
     type: DataTypes.STRING(50),
     allowNull: true,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: true,
   }
 }, {
   sequelize,

@@ -117,3 +117,8 @@ const userData = {firstname, lastname, email};
 const updatedUser = await user.update(userData);
 res.redirect('/admin/users?success=true');}
 
+/*export async function getAdminUser(role) {
+  const adminUser = await User.findOne({where: { role }});
+  return adminUser;
+  };*/
+

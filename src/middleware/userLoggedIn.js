@@ -34,7 +34,7 @@ const userLoggedIn = async (req, res, next) => {
 
     // Ajout de l'utilisateur : Si l’utilisateur est trouvé et que le token est valide, 
     // l’objet user est attaché à req.user, ce qui permet aux routes ou middlewares suivants d’y accéder.
-    req.user = user;
+    req.user.id = decoded.id;
     next();
 
 

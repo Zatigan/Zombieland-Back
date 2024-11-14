@@ -4,6 +4,7 @@ import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
 import cryptoRandomString from "crypto-random-string";
 import { render } from "ejs";
+import { sendEmail } from "./mail.controller.js";
 
 
 export async function createUser(req, res) { 
@@ -151,16 +152,14 @@ export async function forgottenPassword (req, res) {
     return res.status(400).json({ error: error.message });
   }
 
+  //* Récuperation des infos dans le req.body 
   const {email} = req.body;
+
   //* Vérification qu'aucun champ n'est manquant
   if (/*!firstname || !lastname ||*/ !email) {
     res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
     return; 
   }
-
-  //* Récuperation des infos dans le req.body 
-  // const {firstname, lastname, email}: {firstname: string, lastname: string, email: string} = req.body; ==> la ligne ci-dessous correspond à du TS qui permet d'annoncer le type de chacune des variables destructurées
- /*  const {/*firstname, lastname, email} = req.body; */
 
   //* Recherche en BDD l'utilisateur en question qui a toutes ses infos
   const user = await User.findOne({
@@ -187,21 +186,20 @@ export async function forgottenPassword (req, res) {
   console.log(url)
 
   try {
-  //   const html = render(
-  //     ForgotPasswordEmail({
-  //       params: {
-  //         firstname: User.firstname,
-  //         lastname: User.lastname,
-  //         email: User.email,
-  //         url: url,
-  //       },
-  //     })
-  //   );
+    const html = 
+    `<html lang="fr">
+    <h1>Bonjour ${user.firstname} ${user.lastname},</h1>
+    <p>Nous avons reçu une demande de changement de mot de passe. Si cette demande ne vient pas de vous, ignorez cet email.</p>
+    <a href="http://${url}"> Cliquez ici </a>
+    <p>Nous vous souhaitons une bonne fin de journée,</p>
+    <p>L'équipe Zombieland</p>
+  </html> `
+  ;
 
-  // //* Envoi de l'email à l'utilisateur
-  // await sendEmail(req.body.email, "Reset Password", html);
-  return res.json({
-    status: 200,
+  //* Envoi de l'email à l'utilisateur
+  await sendEmail(req.body.email, "Reset Password", html);
+
+  return res.status(200).json({
     url, 
     message: "Email successfully sent. Please check your email.",
   });
@@ -209,24 +207,34 @@ export async function forgottenPassword (req, res) {
   } catch (error) {
 
     console.log("the error is", error);
-    return res.json({
-      status: 500,
+    return res.status(500).json({
       message: "Something went wrong, please try again!",
     });
   }
 };
 
 export async function resetPassword (req, res) {
+  
+  //* Récupération du token et du password
   const {token, newPassword} = req.body;
   console.log('token ::>' , token);
 
+  //* Recherche de l'utilisateur en se basant sur le token
   const user = await User.findOne({ where : { password_reset_token : token }});
 
+  //* Erreur si le user n'existe pas
   if(!user) return res.status(400).json({message: 'Token invalide'});
 
+  //* Hashage du nouveaau mot de passe
   const hashedPassword = await argon2.hash(newPassword);
+
+  //* Enregistrement du nouveau mot de passe hashé comme mot de passe de user
   user.password = hashedPassword;
+
+  //* Remise à zéro du champ de token
   user.password_reset_token = null;
+
+  //* Enregistrement des modifications de user
   user.save();
 
   res.status(200).json({message:'Mot de passe réinitialisé avec succès!'});

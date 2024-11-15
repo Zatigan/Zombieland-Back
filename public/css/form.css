@@ -1,0 +1,93 @@
+
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #243037; 
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;    /* Centre verticalement */
+  height: 100vh;          /* Prend toute la hauteur de l'écran */
+}
+
+h1 {
+  color: rgb(240, 248, 255);
+}
+
+.login-form-container {
+  text-align: center; /* Centre le contenu du formulaire */
+}
+
+.form-message {
+  font-size: 1rem;
+  color: rgb(210, 218, 225); /* Couleur neutre */
+  margin-bottom: 20px; /* Espacement avec le formulaire */
+  text-align: center; /* Centre le texte */
+}
+
+
+
+
+.login-form {
+  background-color: white; /* Fond blanc pour contraster */
+  border-radius: 8px;        /* Coins arrondis */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 1); /* Ombre légère */
+  padding: 2rem 6rem;
+  width: 100%;
+  max-width: 400px;          /* Largeur maximale */
+  box-sizing: border-box;    /* Inclut padding dans les dimensions */
+}
+
+.login-form div {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.login-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;               /* Les champs prennent toute la largeur */
+  padding: 0.5rem;
+  border: 1px solid #afadad;
+  border-radius: 1rem;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #ddd;
+}
+
+.login-form input:focus {
+  border-color: #243037; /* Couleur d'accentuation */
+  outline: none;
+  box-shadow: 0 0 3px #63878C;
+}
+
+.login-form button {
+  width: 100%;
+  background-color: #63878C;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #BE3B40;
+}
+
+.login-form p {
+  margin: 0;
+  text-align: center;
+  color: red;
+}

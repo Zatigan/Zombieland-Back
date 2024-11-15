@@ -51,6 +51,9 @@ User.init ({
   },
   password_reset_expires: {
     type: DataTypes.TEXT,
+  },
+  role: {
+    type: DataTypes.STRING,
     allowNull: true,
   }
 }, {

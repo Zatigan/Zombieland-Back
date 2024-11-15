@@ -51,7 +51,12 @@ export async function addUser(req, res) {
     .pattern(new RegExp('(?=.*[A-Z])')) // Au moins une majuscule
     .pattern(new RegExp('(?=.*[0-9])')) // Au moins un chiffre
     .required(), 
-    //profil_image: Joi.string().optional()
+    pseudo: Joi.string().max(50).optional(), 
+  adress: Joi.string().max(50).optional(), 
+  postal_code: Joi.string().max(20).optional(), 
+  city: Joi.string().max(50).optional(), 
+  role: Joi.string().valid('member', 'admin').default('member').optional(), 
+    
   })
   
   const { error } = userSchema.validate(req.body)
@@ -60,12 +65,12 @@ export async function addUser(req, res) {
   }
   
   // On récupère les champs dont on va se servir
-  const { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password, pseudo, adress, postal_code, city, role } = req.body;
   
 
-// On vérifie qu'aucun champ n'est manquant / vide
+// On vérifie qu'aucun champ obligatoire n'est manquant / vide
 if (!firstname || !lastname || !email || !password) {
-  res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+  res.status(400).json(({ message: 'Merci de remplir tous les champs obligatoires'}));
   return; 
 }
 // Todo vérifier si les données existe => si pas de données res.status(400)
@@ -86,7 +91,12 @@ if (!firstname || !lastname || !email || !password) {
     firstname,
     lastname,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    pseudo,
+    adress,
+    postal_code,
+    city,
+    role
   };
   
   // Création du user
@@ -111,8 +121,8 @@ export async function updateUser(req, res){
 const userId = Number.parseInt(req.params.id);  
 const user = await User.findByPk(userId);
 
-const {firstname, lastname, email} = req.body;
-const userData = {firstname, lastname, email};
+const {firstname, lastname, email, pseudo, adress, postal_code, city, role} = req.body;
+const userData = {firstname, lastname, email, pseudo, adress, postal_code, city, role};
 
 const updatedUser = await user.update(userData);
 res.redirect('/admin/users?success=true');}

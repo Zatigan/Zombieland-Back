@@ -24,6 +24,8 @@ const userLoggedIn = async (req, res, next) => {
     // decoded => contient les informations stockées dans le token (comme l’ID de l’utilisateur) si la vérification réussit.
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    //TODO: Commenter les lignes 30 à 35 (La vérification 'user' ne se fait pas à cette endroit là)
+
     // Recherche de l’utilisateur : Utilise l’ID extrait du token pour trouver l’utilisateur dans la base de données.
     const user = await User.findByPk(decoded.id);
 

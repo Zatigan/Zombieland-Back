@@ -20,9 +20,9 @@
           <td><%=reservation.ticket%></td>
           <td><%=reservation.total_price%></td>
           <td><%=reservation.date%></td>
-          <td> <a href="/admin/reservations/<%=reservation.id%>">Modifier</a></td>
+          <td><a href="/admin/reservations/<%= reservation.id%>">Modifier</a></td>
           <td>
-            <form action="/admin/reservations/del/<%=reservation.id%>" method="post">
+            <form action="/admin/reservations/del/<%= reservation.id%>" method="post">
               <button type="submit">Supprimer</button>
             </form>
           </td>

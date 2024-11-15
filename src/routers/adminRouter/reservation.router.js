@@ -6,4 +6,5 @@ import { controllerWrapper as cw } from "./controller.wrapper.js";
 export const router = Router();
 
 router.get("/reservations", cw(reservationController.reservationPage))
-router.get("/reservations", cw (reservationController.getOneReservation))
+router.get("/reservations/:id", cw (reservationController.getOneReservation))
+router.post("/reservations/:id", cw(reservationController.updateReservation))

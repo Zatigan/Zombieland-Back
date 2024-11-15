@@ -22,6 +22,7 @@ export async function getOneUser(req,res) {
 export async function myProfile(req, res) {
       // Récupération des informations de l’utilisateur connecté à partir de son ID.
       const user = await User.findByPk(req.user.id);
+     
       
      /*  user.profilePicture = user.profilePicture
           ? ImageService.getImageUrl(req, user.profilePicture)

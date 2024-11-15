@@ -12,7 +12,7 @@ const userLoggedIn = async (req, res, next) => {
 
   const token = tokenHeader.split(" ")[1];
   // const tokenWithoutBearer = token ? token.slice(7) : null; //*On supprime
-  console.log(token);
+  console.log("token", token);
   
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -25,20 +25,23 @@ const userLoggedIn = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Recherche de l’utilisateur : Utilise l’ID extrait du token pour trouver l’utilisateur dans la base de données.
-    const user = await User.findByPk(decoded.id);
+    // const user = await User.findByPk(decoded.id);
 
-    // Si aucun utilisateur correspondant à l’ID n'est trouvé, la requête échoue avec un code 401 (Unauthorized).
-    if (!user) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }  
+    // // Si aucun utilisateur correspondant à l’ID n'est trouvé, la requête échoue avec un code 401 (Unauthorized).
+    // if (!user) {
+    //     return res.status(401).json({ message: 'Unauthorized' });
+    // }  
 
     // Ajout de l'utilisateur : Si l’utilisateur est trouvé et que le token est valide, 
     // l’objet user est attaché à req.user, ce qui permet aux routes ou middlewares suivants d’y accéder.
-    req.user.id = decoded.id;
+    //req.user = user;
+    // ? On spread le payload du token dans req.user pour pouvoir retrouver req.user.id dans nos controllers.
+    req.user = {...decoded};
     next();
 
 
 } catch (error) {
+    console.log('error midware:>> ', error);
     // If an error occurs, we respond with a 500 status code
     return res.status(500).json({ message: error.message });
 }

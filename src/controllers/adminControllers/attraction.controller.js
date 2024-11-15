@@ -1,7 +1,7 @@
 import {Attraction, Category} from "../../models/index.js"
 
 export async function attractionPage(req,res) {
-  const attractions = await Attraction.findAll({ include: "categories", order: [['id', 'ASC']] });
+  const attractions = await Attraction.findAll({ include: "categories", order: [['id', 'ASC']] }); 
   const successMessage = req.query.success;
   res.render("attractions", {attractions, successMessage});
 };

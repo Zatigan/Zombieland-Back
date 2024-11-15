@@ -1,6 +1,11 @@
 <%- include('partials/header') %>
 <main>
   <h1>Liste des réservations</h1>
+  <% if (successMessage) { %>
+    <div class="alert alert-success">
+     Votre demande a bien été prise en compte
+    </div>
+  <% } %>
   <table>
     <tr>
       <th>ID</th>

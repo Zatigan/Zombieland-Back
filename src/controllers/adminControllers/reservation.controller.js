@@ -39,3 +39,10 @@ await reservation.update({
 
 res.redirect('/admin/reservations?success=true')
 }
+
+export async function deleteReservation(req, res) {
+  const reservationId = req.params.id
+  await Reservation.destroy({ where: { id: reservationId }});
+
+  res.status(201).redirect('/admin/reservations?success=true')
+}

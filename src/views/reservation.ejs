@@ -1,27 +1,26 @@
 <%- include('partials/header') %>
 
 <main>
-  <h1>Modifier une réservation :  <%= reservation.ref_number%> </h1>
-
-<form action="/admin/reservations/<%= reservation.id%>" method="POST" class="form-attraction">
-  <div>
-    <label for="reference"> Référence de la réservation</label>
-    <input type="text" id="reference" name="reference" value="<%= reservation.ref_number%>">
-  </div>
-  <div>
-    <label for="ticket">Nombre de ticket</label>
-    <input type="text" id="ticket" name="ticket" value="<%= reservation.ticket%>">
-  </div>
-  <div>
-    <label for="price">Prix</label>
-    <input type="text" id="price" name="price" readonly value="<%= reservation.total_price%>">
-  </div>
-  <div>
-    <label for="date">Date</label>
-    <input type="text" id="date" name="date" value="<%= reservation.date%>">
-  </div>
-  <button type="submit">Modifier</button>
-</form>
+    <h1>Modifier une réservation :  <%= reservation.ref_number%> </h1>
+  <form action="/admin/reservations/<%= reservation.id%>" method="POST" class="form-attraction">
+    <div>
+      <label for="reference"> Référence de la réservation</label>
+      <input type="text" id="reference" name="reference" value="<%= reservation.ref_number%>">
+    </div>
+    <div>
+      <label for="ticket">Nombre de ticket</label>
+      <input type="text" id="ticket" name="ticket" value="<%= reservation.ticket%>">
+    </div>
+    <div>
+      <label for="price">Prix</label>
+      <input type="text" id="price" name="price" readonly value="<%= reservation.total_price%>">
+    </div>
+    <div>
+      <label for="date">Date</label>
+      <input type="text" id="date" name="date" value="<%= reservation.date%>">
+    </div>
+    <button type="submit">Modifier</button>
+  </form>
 
 </main>
 <%- include('partials/footer') %>

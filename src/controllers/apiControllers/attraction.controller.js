@@ -11,7 +11,7 @@ export async function getAttractionByCategory(req, res) {
   const categoryId = parseInt(req.params.id);
 
   if (isNaN(categoryId)) {
-    return res.status(400).json({ error: "ID must be an integer." });
+    return res.status(400).json({ error: "ID doit être un chiffre" }); /* ID must be an integer. */
   }
   const attractionsByCategory = await Attraction.findAll({
     include: {
@@ -23,7 +23,7 @@ export async function getAttractionByCategory(req, res) {
   });
 
   if (attractionsByCategory.length === 0) {
-    return res.status(404).json({ message: "No attractions found for this category." });
+    return res.status(404).json({ message: "Aucune attraction n'est associée à cette catégorie" }); /* No attractions found for this category. */
   }
 
   res.json(attractionsByCategory);
@@ -33,13 +33,13 @@ export async function getOneAttraction(req, res) {
   const attractionId = parseInt(req.params.id)
 
   if (isNaN(attractionId)) {
-    return res.status(404).json({ error: "Attraction not found. Please verify the provided id"})
+    return res.status(404).json({ error: "Attraction non trouvée. Merci de vérifier l'id fournie."}) /* Attraction not found. Please verify the provided id */
   }
 
   const attraction = await Attraction.findByPk(attractionId);
 
   if (! attraction) {
-    return res.status(404).json({ error: "Attraction not found. Please verify the provided id"})
+    return res.status(404).json({ error: "Attraction non trouvée. Merci de vérifier l'id fournie."}) /* Attraction not found. Please verify the provided id */
   }
 
   res.json(attraction)

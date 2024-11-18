@@ -43,13 +43,13 @@ export async function updateUser(req, res) {
   
   const userId = parseInt(req.user.id)
   if(isNaN(userId)) {
-    return res.status(404).json({ error: `User not found. Please verify the provided id.`});
+    return res.status(404).json({ error: `Utilisateur inconnu. Merci de vérifier l'id fournie.`}); /* User not found. Please verify the provided id. */
   }
 
   const user = await User.findByPk(userId);
 
   if(!userId) {
-    return res.status(404).json({ error: "User not found. Please verify the provided id." });
+    return res.status(404).json({ error: "Utilisateur inconnu. Merci de vérifier l'id fournie." }); /* User not found. Please verify the provided id. */
   }
   
   const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
@@ -73,7 +73,7 @@ export async function delProfile(req, res) {
   const user = await User.findByPk(parseInt(userId));
 
   if (!user) {
-    return res.status(404).json({ "error": "Utilisateur non trouvé" });
+    return res.status(404).json({ "error": "Utilisateur non trouvé" }); /* User not found. */
   }
   
   await user.destroy();
@@ -89,11 +89,11 @@ export async function delReservationByProfile(req, res) {
 
 
   if (!userReservation) {
-    return res.status(404).json({ "error": "Réservation non trouvée" });
+    return res.status(404).json({ "error": "Réservation non trouvée." }); /* Booking not found */
   }
 
 await userReservation.destroy();
-res.status(200).json({ message: "Réservation supprimée avec succès" });
+res.status(200).json({ message: "Réservation supprimée avec succès." }); /* Booking successfully cancelled */
 } 
 
 export async function updateReservationByProfile(req, res) {
@@ -104,16 +104,16 @@ const {reservationId, date, ticket, price }  = req.body;
 const userReservation = await Reservation.findByPk(reservationId);
 
 if (!userReservation) {
-  return res.status(404).json({ "error": "Réservation non trouvée" });
+  return res.status(404).json({ "error": "Réservation non trouvée." }); /* Booking not found */
 }
 
 
  // Vérifie que les champs 'date' et 'ticket' sont bien présents
  if (!date) {
-  return res.status(400).json({ error: "La date est requise pour la réservation." });
+  return res.status(400).json({ error: "La date est requise pour la réservation." }); /* A date is required. */
 }
 if (!ticket || ticket <= 0) {
-  return res.status(400).json({ error: "Le nombre de billets doit être supérieur à zéro." });
+  return res.status(400).json({ error: "Le nombre de billets doit être supérieur à zéro." }); /* Ticket quantity must be over 0. */
 }
 
 // Récupère le nombre total de billets déjà réservés pour la date spécifiée
@@ -133,7 +133,7 @@ const ticketsAvailable = 100 - ticketsReserved;
 if (ticket > ticketsAvailable)
   {
     return res.status(400).json({ 
-      error: `Il ne reste que ${ticketsAvailable} billets disponibles pour cette date.` 
+      error: `Il ne reste que ${ticketsAvailable} billets disponibles pour cette date.`  /* Only ${ticketsAvailable} tickets left for that date. */
     });
   }
 

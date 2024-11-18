@@ -70,7 +70,7 @@ export async function addUser(req, res) {
 
 // On vérifie qu'aucun champ obligatoire n'est manquant / vide
 if (!firstname || !lastname || !email || !password) {
-  res.status(400).json(({ message: 'Merci de remplir tous les champs obligatoires'}));
+  res.status(400).json(({ message: 'Merci de remplir tous les champs obligatoires.'})); /* Please fill all mandatory fields. */
   return; 
 }
 // Todo vérifier si les données existe => si pas de données res.status(400)
@@ -80,7 +80,7 @@ if (!firstname || !lastname || !email || !password) {
   // Si un utilisateur existe déjà, on renvoie un code 409 (Conflict) 
   // et un message indiquant que l’utilisateur existe déjà.
   if (userExists) {
-      return res.status(409).json({ message: 'An account is already associated to this email adress' });
+      return res.status(409).json({ message: 'Un compte est déjà associé à cette adresse email.' }); /* An account is already associated to this email address */
   }
   
    // hacher le mot de passe avant de le stocker.

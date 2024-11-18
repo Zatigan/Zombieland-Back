@@ -35,7 +35,7 @@ const reservationDate = new Date(date);
 if (reservationDate < currentDate) {
   return res.render("reservation", {
     reservation,
-    errorMessageTest: "La date de réservation doit être dans le futur.",
+    errorMessageTest: "La date de réservation doit être dans le futur.", /* Booking date must be in the future. */
   });
 }
 
@@ -68,7 +68,7 @@ export async function addReservation(req, res) {
   
   // On vérifie qu'aucun champ obligatoire n'est manquant / vide
   if (!email || !date || !ticket) {
-    res.status(400).json(({ message: 'Merci de remplir tous les champs obligatoires'}));
+    res.status(400).json(({ message: 'Merci de remplir tous les champs obligatoires.'}));  /* All fields are mandatory. */
     return; 
   }
 
@@ -78,7 +78,7 @@ export async function addReservation(req, res) {
 
   if (reservationDate < currentDate) {
     return res.render("newReservation", {
-      errorMessage: "La date de réservation doit être dans le futur.",
+      errorMessage: "La date de réservation doit être dans le futur.", /* Booking date must be in the future. */
     });
   }
 
@@ -87,7 +87,7 @@ export async function addReservation(req, res) {
   const user = await User.findOne({ where: { email }})
 
   if (!user) {
-    return res.status(404).send("Utilisateur non trouvé");
+    return res.status(404).send("Utilisateur non trouvé."); /* User not found */
   }
   const cost = ticket*60
 

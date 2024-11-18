@@ -1,5 +1,26 @@
 import { User } from "../../models/index.js";
 import { Reservation, sequelize } from "../../models/index.js";
+import sanitizeHtml from "sanitize-html";
+import Joi from "joi";
+
+//* ====================== Validation Schemas ======================
+
+const userSchema = Joi.object({
+  firstname: Joi.string().max(50).required(), 
+  lastname: Joi.string().max(50).required(), 
+  email: Joi.string().email().max(100).required(), 
+  password: Joi.string().min(12).max(255).required(), 
+  profil_image: Joi.string().uri().max(255).optional(), 
+  pseudo: Joi.string().max(50).optional(), 
+  adress: Joi.string().max(50).optional(), 
+  postal_code: Joi.string().max(20).optional(),
+  city: Joi.string().max(50).optional(), 
+  role: Joi.string().valid('member', 'admin').default('member').optional(), 
+});
+
+
+
+
 //* ====================== Functions à mettre plus tard dans l'adminControllers ======================
 
 export async function getAllUsers(req,res) {
@@ -22,7 +43,11 @@ export async function getOneUser(req,res) {
 export async function myProfile(req, res) {
       // Récupération des informations de l’utilisateur connecté à partir de son ID.
       const user = await User.findByPk(req.user.id);
-     
+      if (!user) {
+        return res.status(404).json({ error: "User not found." });
+      }
+      user.firstname = sanitizeHtml(user.firstname);
+      user.lastname = sanitizeHtml(user.lastname);
       
      /*  user.profilePicture = user.profilePicture
           ? ImageService.getImageUrl(req, user.profilePicture)
@@ -41,7 +66,7 @@ export async function reservationByProfile(req, res) {
 
 export async function updateUser(req, res) {
   
-  const userId = parseInt(req.user.id)
+  const userId = Number.parseInt(req.user.id,)
   if(isNaN(userId)) {
     return res.status(404).json({ error: `User not found. Please verify the provided id.`});
   }
@@ -55,29 +80,30 @@ export async function updateUser(req, res) {
   const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
 
   const updateUser = await user.update({
-    firstname: firstname || user.firstname,
-    lastname: lastname || user.lastname,
-    email: email || user.email,
+    firstname: sanitizeHtml(firstname || user.firstname),
+    lastname: sanitizeHtml(lastname || user.lastname),
+    email: sanitizeHtml(email || user.email),
     profil_image: profil_image || user.profil_image,
-    pseudo: pseudo || user.pseudo,
-    adress: adress || user.adress,
-    postal_code: postal_code || user.postal_code,
-    city: city || user.city,
+    pseudo: sanitizeHtml(pseudo || user.pseudo),
+    adress: sanitizeHtml(adress || user.adress),
+    postal_code: sanitizeHtml(postal_code || user.postal_code),
+    city: sanitizeHtml(city || user.city),
   });
 
+  
   res.json(updateUser);
 }
 
 export async function delProfile(req, res) {
   const userId = req.user.id
-  const user = await User.findByPk(parseInt(userId));
+  const user = await User.findByPk(Number.parseInt(userId));
 
   if (!user) {
     return res.status(404).json({ "error": "Utilisateur non trouvé" });
   }
   
   await user.destroy();
-  res.status(200);
+  res.status(200).json({ message: "Profil supprimé avec succès." });
 }
 
 export async function delReservationByProfile(req, res) {

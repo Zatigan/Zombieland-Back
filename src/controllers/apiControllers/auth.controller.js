@@ -191,9 +191,9 @@ export async function forgottenPassword (req, res) {
     <h1>Bonjour ${user.firstname} ${user.lastname},</h1>
     <p>Nous avons reçu une demande de changement de mot de passe. Si cette demande ne vient pas de vous, ignorez cet email.</p>
     <a href="http://${url}"> Cliquez ici </a>
-    <p>Nous vous souhaitons une bonne fin de journée,</p>
+    <p>Nous vous souhaitons une bonne journée,</p>
     <p>L'équipe Zombieland</p>
-  </html> `
+    </html>`
   ;
 
   //* Envoi de l'email à l'utilisateur

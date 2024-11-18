@@ -2,6 +2,10 @@ import Joi from "joi";
 import { User } from "../../models/index.js";
 import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
+import cryptoRandomString from "crypto-random-string";
+import { render } from "ejs";
+import { sendEmail } from "./mail.controller.js";
+
 
 export async function createUser(req, res) { 
 
@@ -13,7 +17,7 @@ export async function createUser(req, res) {
     .min(1)
     .max(50),
     
-    email: Joi.string().email().required()   /*email validator ?*/,
+    email: Joi.string().email().required()   /* ajout d'email validator pour vérifier les mails soumis ?*/,
     //{ minDomainSegments: 3, tlds: { allow: ['com', 'net', 'io']} }
   
     password: Joi.string()
@@ -38,7 +42,7 @@ export async function createUser(req, res) {
   if (error) {
     return res.status(400).json({ error: error.message });
   }
-  
+
   // On récupère les champs dont on va se servir
   const { firstname, lastname, email, password, confirmedPassword } = req.body;
   
@@ -79,9 +83,9 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
     message: 'User created. Please login to get your access token.',
   });
   
-  }
+  };
   
-  export async function loginUser(req, res) {
+export async function loginUser(req, res) {
     
     // On recupère les données email et password dans le body
     const {email, password} = req.body;
@@ -121,7 +125,117 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
   
   return res.json({ accessToken, user : userSafe });
   
+  };
+
+export async function forgottenPassword (req, res) {
+
+  if(req.method !== 'POST') {
+    return;
   }
 
+  //* Sécurité en définissant la nature des champs qui vont être soumis par l'utilisateur
+  const userSchema = Joi.object({ 
+     /*firstname: Joi.string().required().min(3).max(50),
+    
+    lastname: Joi.string()
+    .required()
+    .min(1)
+    .max(50), */
+  
+    email: Joi.string().email().required()
+  });
+  
+  //* Tout passe à la moulinette de Joi
+  const { error } = userSchema.validate(req.body)
 
+  if (error) {
+    return res.status(400).json({ error: error.message });
+  }
 
+  //* Récuperation des infos dans le req.body 
+  const {email} = req.body;
+
+  //* Vérification qu'aucun champ n'est manquant
+  if (/*!firstname || !lastname ||*/ !email) {
+    res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+    return; 
+  }
+
+  //* Recherche en BDD l'utilisateur en question qui a toutes ses infos
+  const user = await User.findOne({
+    where: {/* firstname: firstname, lastname: lastname,  */email: email}
+  });
+  
+  //* Si jamais l'utilisateur n'existe pas, erreur
+  if (/* user == null || */ !user) {
+    return res.status(422).json({message: "Cet utilisateur n'existe pas"});
+  };
+
+  //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
+  const randomString = cryptoRandomString({length:64, type:'alphanumeric'});
+
+  //* Enregistrement de la randomString au champ password_reset_token dans la bdd
+  user.password_reset_token = randomString;
+  await user.save();
+
+  //* Hachage de l'adresse mail (peut-être que je devrai hasher le mail de req.body...)
+  const hashedMail = await argon2.hash(user.email);
+
+  //* App_url à définir dans le .env
+  const url = `${process.env.APP_URL}/reset-password?signature=${randomString}&mail=${hashedMail}`;
+  console.log(url)
+
+  try {
+    const html = 
+    `<html lang="fr">
+    <h1>Bonjour ${user.firstname} ${user.lastname},</h1>
+    <p>Nous avons reçu une demande de changement de mot de passe. Si cette demande ne vient pas de vous, ignorez cet email.</p>
+    <a href="http://${url}"> Cliquez ici </a>
+    <p>Nous vous souhaitons une bonne journée,</p>
+    <p>L'équipe Zombieland</p>
+    </html>`
+  ;
+
+  //* Envoi de l'email à l'utilisateur
+  await sendEmail(req.body.email, "Reset Password", html);
+
+  return res.status(200).json({
+    url, 
+    message: "Email successfully sent. Please check your email.",
+  });
+
+  } catch (error) {
+
+    console.log("the error is", error);
+    return res.status(500).json({
+      message: "Something went wrong, please try again!",
+    });
+  }
+};
+
+export async function resetPassword (req, res) {
+  
+  //* Récupération du token et du password
+  const {token, newPassword} = req.body;
+  console.log('token ::>' , token);
+
+  //* Recherche de l'utilisateur en se basant sur le token
+  const user = await User.findOne({ where : { password_reset_token : token }});
+
+  //* Erreur si le user n'existe pas
+  if(!user) return res.status(400).json({message: 'Token invalide'});
+
+  //* Hashage du nouveaau mot de passe
+  const hashedPassword = await argon2.hash(newPassword);
+
+  //* Enregistrement du nouveau mot de passe hashé comme mot de passe de user
+  user.password = hashedPassword;
+
+  //* Remise à zéro du champ de token
+  user.password_reset_token = null;
+
+  //* Enregistrement des modifications de user
+  user.save();
+
+  res.status(200).json({message:'Mot de passe réinitialisé avec succès!'});
+}

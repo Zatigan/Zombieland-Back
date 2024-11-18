@@ -6,3 +6,5 @@ export const router = Router();
 
 router.post("/signup", cw(authRouter.createUser));
 router.post("/login", cw(authRouter.loginUser));
+router.post("/lostpassword", cw(authRouter.forgottenPassword));
+router.post("/resetPassword", cw(authRouter.resetPassword));

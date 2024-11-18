@@ -141,6 +141,16 @@ input, textarea, select{
   animation-delay: 1s;
 }
 
+.error-message {
+  background-color: #be3b40;
+  color: #f5fcfc;
+  padding: 1vh 2vh;
+  width: fit-content;
+  border-radius: 10px;
+  animation: fadeOut 3s ease-in-out forwards;
+  animation-delay: 1s;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

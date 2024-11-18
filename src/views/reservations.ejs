@@ -1,6 +1,12 @@
 <%- include('partials/header') %>
 <main>
   <h1>Liste des réservations</h1>
+  <% if (successMessage) { %>
+    <div class="alert alert-success">
+     Votre demande a bien été prise en compte
+    </div>
+  <% } %>
+  <a class="btn-add" href="/admin/reservations/add">Ajouter une réservation</a>
   <table>
     <tr>
       <th>ID</th>
@@ -20,9 +26,9 @@
           <td><%=reservation.ticket%></td>
           <td><%=reservation.total_price%></td>
           <td><%=reservation.date%></td>
-          <td> <a href="/admin/reservations/<%=reservation.id%>">Modifier</a></td>
+          <td><a href="/admin/reservations/<%= reservation.id%>">Modifier</a></td>
           <td>
-            <form action="/admin/reservations/del/<%=reservation.id%>" method="post">
+            <form action="/admin/reservations/del/<%= reservation.id%>" method="post">
               <button type="submit">Supprimer</button>
             </form>
           </td>

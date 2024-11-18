@@ -85,14 +85,14 @@ export async function updateUser(req, res) {
     return res.status(404).json({ error: "User not found. Please verify the provided id." });
   }
 
-  console.log("Données brutes reçues dans req.body :", req.body);
-  console.log("Valeurs actuelles de l'utilisateur :", user.toJSON());
+  //console.log("Données brutes reçues dans req.body :", req.body);
+  //console.log("Valeurs actuelles de l'utilisateur :", user.toJSON());
 
 
   
   const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
 
-  const sanitizedData = {
+  const updateUser = await user.update({
     firstname: sanitizeInput(firstname || user.firstname),
     lastname: sanitizeInput(lastname || user.lastname),
     email: sanitizeInput(email || user.email),
@@ -101,10 +101,10 @@ export async function updateUser(req, res) {
     adress: sanitizeInput(adress || user.adress),
     postal_code: sanitizeInput(postal_code || user.postal_code),
     city: sanitizeInput(city || user.city),
-  };
+  });
 
-  console.log("Données préparées pour la mise à jour :", sanitizedData);
-  console.log("Utilisateur après mise à jour :", updateUser);
+  //console.log("Données préparées pour la mise à jour :", sanitizedData);
+  //console.log("Utilisateur après mise à jour :", updateUser);
 
   
 

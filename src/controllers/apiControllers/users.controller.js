@@ -3,6 +3,14 @@ import { Reservation, sequelize } from "../../models/index.js";
 import sanitizeHtml from "sanitize-html";
 import Joi from "joi";
 
+function sanitizeInput(input) {
+  return sanitizeHtml(input, {
+    allowedTags: [], // Aucune balise HTML n'est autorisée
+    allowedAttributes: {}, // Aucune attribut HTML n'est autorisé
+    disallowedTagsMode: 'discard' // Supprime toute balise HTML présente
+  });
+}
+
 //* ====================== Validation Schemas ======================
 
 const userSchema = Joi.object({
@@ -46,8 +54,8 @@ export async function myProfile(req, res) {
       if (!user) {
         return res.status(404).json({ error: "User not found." });
       }
-      user.firstname = sanitizeHtml(user.firstname);
-      user.lastname = sanitizeHtml(user.lastname);
+      user.firstname = sanitizeInput(user.firstname);
+      user.lastname = sanitizeInput(user.lastname);
       
      /*  user.profilePicture = user.profilePicture
           ? ImageService.getImageUrl(req, user.profilePicture)
@@ -76,19 +84,29 @@ export async function updateUser(req, res) {
   if(!userId) {
     return res.status(404).json({ error: "User not found. Please verify the provided id." });
   }
+
+  console.log("Données brutes reçues dans req.body :", req.body);
+  console.log("Valeurs actuelles de l'utilisateur :", user.toJSON());
+
+
   
   const {firstname, lastname, email, profil_image, pseudo, adress, postal_code, city } = req.body; 
 
-  const updateUser = await user.update({
-    firstname: sanitizeHtml(firstname || user.firstname),
-    lastname: sanitizeHtml(lastname || user.lastname),
-    email: sanitizeHtml(email || user.email),
+  const sanitizedData = {
+    firstname: sanitizeInput(firstname || user.firstname),
+    lastname: sanitizeInput(lastname || user.lastname),
+    email: sanitizeInput(email || user.email),
     profil_image: profil_image || user.profil_image,
-    pseudo: sanitizeHtml(pseudo || user.pseudo),
-    adress: sanitizeHtml(adress || user.adress),
-    postal_code: sanitizeHtml(postal_code || user.postal_code),
-    city: sanitizeHtml(city || user.city),
-  });
+    pseudo: sanitizeInput(pseudo || user.pseudo),
+    adress: sanitizeInput(adress || user.adress),
+    postal_code: sanitizeInput(postal_code || user.postal_code),
+    city: sanitizeInput(city || user.city),
+  };
+
+  console.log("Données préparées pour la mise à jour :", sanitizedData);
+  console.log("Utilisateur après mise à jour :", updateUser);
+
+  
 
   
   res.json(updateUser);

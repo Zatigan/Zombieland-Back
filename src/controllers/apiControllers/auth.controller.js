@@ -4,6 +4,15 @@ import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
 import sanitizeHtml from 'sanitize-html';
 
+function sanitizeInput(input) {
+  return sanitizeHtml(input, {
+    allowedTags: [], // Aucune balise HTML n'est autorisée
+    allowedAttributes: {}, // Aucune attribut HTML n'est autorisé
+    disallowedTagsMode: 'discard' // Supprime toute balise HTML présente
+  });
+}
+
+
 export async function createUser(req, res) { 
 
   const userSchema = Joi.object({ 
@@ -52,9 +61,9 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
 // Todo vérifier si les données existe => si pas de données res.status(400)
 
 // Nettoyage des entrées utilisateur pour éviter les injections XSS
-const sanitizedFirstname = sanitizeHtml(firstname); // Sanitization du prénom
-const sanitizedLastname = sanitizeHtml(lastname);   // Sanitization du nom
-const sanitizedEmail = sanitizeHtml(email);         // Sanitization de l'email
+const sanitizedFirstname = sanitizeInput(firstname); // Sanitization du prénom
+const sanitizedLastname = sanitizeInput(lastname);   // Sanitization du nom
+const sanitizedEmail = sanitizeInput(email);         // Sanitization de l'email
   
   const userExists = await User.findOne({ where: { email } });
   
@@ -97,7 +106,7 @@ const sanitizedEmail = sanitizeHtml(email);         // Sanitization de l'email
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const sanitizedEmail = sanitizeHtml(email);
+    const sanitizedEmail = sanitizeInput(email);
   
     // Recherche si l'utilisateur existe
     const user = await User.findOne({ where: { email: sanitizedEmail }});
@@ -122,8 +131,8 @@ const sanitizedEmail = sanitizeHtml(email);         // Sanitization de l'email
      delete userSafe[key];
 
      // Nettoyage des champs utilisateur pour éviter les injections XSS dans la réponse
-  userSafe.firstname = sanitizeHtml(userSafe.firstname); // Sanitization du prénom
-  userSafe.lastname = sanitizeHtml(userSafe.lastname);   // Sanitization du nom
+  userSafe.firstname = sanitizeInput(userSafe.firstname); // Sanitization du prénom
+  userSafe.lastname = sanitizeInput(userSafe.lastname);   // Sanitization du nom
      // Génération du Token d’Accès
      // Si l'utilisateur est authentifié avec succès, un token d'accès JWT est généré, contenant l'ID de l'utilisateur. 
      // La clé secrète (stockée dans process.env.JWT_SECRET) signe le token.

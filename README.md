@@ -1,4 +1,4 @@
-# zombieland-back
+# Zombieland-back
 
 ## Description
 
@@ -21,9 +21,7 @@ Elle permet:
 - Gérer les utilisateurs (consultation, ajout, modification, suppression)
 - Gérer les réservations des utilisateurs
 
-## Démo ou aperçu
 
-TODO: Inclure des captures d'écran ou des liens vers des versions live ??
 
 ## Installation
 
@@ -54,7 +52,8 @@ TODO: Inclure des captures d'écran ou des liens vers des versions live ??
 
 ## Documentation API
 
- | Methode |------Endpoint----------------|----------Fonction---------------------------------------------------|
+ | Methode | Endpoint                     | Fonction                                                            |
+ |:-------:|:----------------------------:|:-------------------------------------------------------------------:|
  | GET     |  /attractions                |  Récupère la liste de toutes les attractions                        |
  | GET     |  /attractions/random         |  Récupère trois attractions au hasard                               |
  | GET     |  /attractions/:id            |  Récupère une seule attraction                                      | 
@@ -62,7 +61,7 @@ TODO: Inclure des captures d'écran ou des liens vers des versions live ??
  |         |                              |                                                                     |
  | GET     |  /attractions/categories     |   Récupère toutes les catégories                                    |
  |         |                              |                                                                     |
- | GET     |  /reservation                |  ???Permet d'afficher la page de réservation???                     |
+ | GET     |  /reservation                |  Permet d'afficher la page de réservation                           |
  | POST    |  /reservation                |  Permet à l'utilisateur d'effectuer une réservation                 |
  |         |                              |                                                                     |
  | GET     |  /profile                    |  Permet à l'utilisateur de consulter sa page de profil              |

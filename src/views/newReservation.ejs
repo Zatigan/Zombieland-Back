@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<main>
+  <h1>Ajouter une réservation</h1>
+  
+  <form action="/admin/reservations/add" method="post" >
+    <div>
+      <label for="email">Adresse mail du membre</label>
+      <input type="text" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="ticket">Nombre de ticket</label>
+      <input type="text" id="ticket" name="ticket" required>
+    </div>
+    <div>
+      <label for="date">Date</label>
+      <input type="text" id="date" name="date" required>
+      <% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+        <p class="error-message"><%= errorMessage %></p>
+      <% } %>
+    </div>
+
+    <button class="confirm-new-user-btn" type="submit">Enregistrer</button>
+  </form>
+
+</main>
+
+<%- include('partials/footer') %>

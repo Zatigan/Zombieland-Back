@@ -19,8 +19,13 @@
       <label for="date">Date</label>
       <input type="text" id="date" name="date" value="<%= reservation.date%>">
     </div>
+    <% if (typeof errorMessageTest !== "undefined" && errorMessageTest) { %>
+      <p class="error-message"><%= errorMessageTest %></p>
+    <% } %>
+</div>
     <button type="submit">Modifier</button>
   </form>
 
 </main>
+
 <%- include('partials/footer') %>

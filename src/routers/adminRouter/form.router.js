@@ -11,9 +11,9 @@ router.get("/login", sessionController.index);
 router.post("/login", sessionController.login);
 
 // Page d'accueil admin (protégée)
-router.get("/", isAdmin, (req, res) => {
+/*router.get("/", isAdmin, (req, res) => {
   res.render("home");
-});
+});*/
 
 // Déconnexion
 router.get("/logout", sessionController.logout);

@@ -49,6 +49,7 @@ Elle permet:
 - Front: http://localhost:5173
 - Back: http://localhost:3000
 - Back-office: http://localhost:3000/admin
+- Preview: npm run build & npm run preview
 
 ## Documentation API
 
@@ -93,6 +94,7 @@ Elle permet:
     * JWT
     * Joi
     * Cors, Dotenv, Express-session
+    * Sanitize-html
 
  
 

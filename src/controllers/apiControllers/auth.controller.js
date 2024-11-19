@@ -49,7 +49,7 @@ export async function createUser(req, res) {
 
 // On vérifie qu'aucun champ n'est manquant / vide
 if (!firstname || !lastname || !email || !password || !confirmedPassword || password !== confirmedPassword) {
-  res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+  res.status(400).json(({ message: 'Tous les champs sont obligatoires.'})); /* All fields are mandatory. */
   return; 
 }
 // Todo vérifier si les données existe => si pas de données res.status(400)
@@ -59,7 +59,7 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
   // Si un utilisateur existe déjà, on renvoie un code 409 (Conflict) 
   // et un message indiquant que l’utilisateur existe déjà.
   if (userExists) {
-      return res.status(409).json({ message: 'An account is already associated to this email adress' });
+      return res.status(409).json({ message: 'Un compte est déjà associé à cette adresse email.' }); /* An account is already associated to this email address. */
   }
   
    // hacher le mot de passe avant de le stocker.
@@ -80,7 +80,7 @@ if (!firstname || !lastname || !email || !password || !confirmedPassword || pass
   //delete createUser.password;
   
   return res.status(201).json({
-    message: 'User created. Please login to get your access token.',
+    message: 'Utilisateur crée. Veuillez vous connecter pour avoir votre token d\'accès', /* User created. Please login to get your access token. */
   });
   
   };
@@ -92,7 +92,7 @@ export async function loginUser(req, res) {
   
     // Vérifier si les champs son présent
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Un email et un mot de passe sont nécessaires." }); /* Email and password are required */
     }
   
     // Recherche si l'utilisateur existe
@@ -100,7 +100,7 @@ export async function loginUser(req, res) {
     console.log('user', user);
     // Message d'erreur si on trouve l'utilisateur
     if (!user) {
-      return res.status(404).json({ message: "User not found"})
+      return res.status(404).json({ message: "Utilisateur inconnu"}) /* User not found */
     }
   
     // ON veut COMPARER "password" avec le "user.password" de la BDD ==> argon2
@@ -111,7 +111,7 @@ export async function loginUser(req, res) {
      const isMatching = await argon2.verify(hashPassword, password);
      console.log(isMatching)
      if (!isMatching) {
-       return res.status(400).json({ message: "Incorrect email address or password." });
+       return res.status(400).json({ message: "Mot de passe ou adresse email invalide." }); /* Incorrect email address or password. */
      }
      const userSafe = {...user.dataValues};
      const key = "password";
@@ -157,7 +157,7 @@ export async function forgottenPassword (req, res) {
 
   //* Vérification qu'aucun champ n'est manquant
   if (/*!firstname || !lastname ||*/ !email) {
-    res.status(400).json(({ message: 'Tous les champs sont obligatoires'}));
+    res.status(400).json(({ message: 'Tous les champs sont obligatoires.'})); /* All fields are mandatory. */
     return; 
   }
 
@@ -168,7 +168,7 @@ export async function forgottenPassword (req, res) {
   
   //* Si jamais l'utilisateur n'existe pas, erreur
   if (/* user == null || */ !user) {
-    return res.status(422).json({message: "Cet utilisateur n'existe pas"});
+    return res.status(422).json({message: "Cet utilisateur n'existe pas."}); /* User does not exist. */
   };
 
   //* Création d'un élément de réinitialisation (= "jeton" de sécurité)
@@ -201,14 +201,14 @@ export async function forgottenPassword (req, res) {
 
   return res.status(200).json({
     url, 
-    message: "Email successfully sent. Please check your email.",
+    message: "Email envoyé avec succès. Veuillez vérifier vos emails.", /* Email successfully sent. Please check your email. */
   });
 
   } catch (error) {
 
     console.log("the error is", error);
     return res.status(500).json({
-      message: "Something went wrong, please try again!",
+      message: "Une erreur s'est produite, veuillez réessayer.", /* Something went wrong, please try again! */
     });
   }
 };
@@ -223,7 +223,7 @@ export async function resetPassword (req, res) {
   const user = await User.findOne({ where : { password_reset_token : token }});
 
   //* Erreur si le user n'existe pas
-  if(!user) return res.status(400).json({message: 'Token invalide'});
+  if(!user) return res.status(400).json({message: 'Token invalide'}); /* Invalid token */
 
   //* Hashage du nouveaau mot de passe
   const hashedPassword = await argon2.hash(newPassword);
@@ -237,5 +237,5 @@ export async function resetPassword (req, res) {
   //* Enregistrement des modifications de user
   user.save();
 
-  res.status(200).json({message:'Mot de passe réinitialisé avec succès!'});
+  res.status(200).json({message:'Mot de passe réinitialisé avec succès!'}); /* Password has been sucessfully reset */
 }

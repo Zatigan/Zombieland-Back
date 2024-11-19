@@ -49,7 +49,7 @@ Elle permet:
 - Front: http://localhost:5173
 - Back: http://localhost:3000
 - Back-office: http://localhost:3000/admin
-- Preview: npm run build & npm run preview
+- Preview: http://localhost:4173 npm run build & npm run preview
 
 ## Documentation API
 
@@ -86,6 +86,7 @@ Elle permet:
     * React-Datepicker
     * React-Toastify
     * React-Responsive-Carousel
+    * Sitemap
 
 ### Back-end
 - Frameworks et ourils: Node.js, Express, Sequelize, PostgresSQL

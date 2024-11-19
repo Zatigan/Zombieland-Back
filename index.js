@@ -8,6 +8,7 @@ import { router as  adminRouter } from "./src/routers/adminRouter/index.js";
 import { router as apiRouter } from "./src/routers/apiRouter/index.js";
 import path from "path";
 import compression from "compression";
+import { sanitizeMiddleware } from "./src/middleware/sanitize.js";
 
 
 const app = express();
@@ -53,6 +54,8 @@ app.use(rateLimit({
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({limit: "10kb"}));
+
+app.use(sanitizeMiddleware);
 
 
 app.get('/favicon.ico', (req, res) => res.status(204));

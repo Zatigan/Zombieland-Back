@@ -1,6 +1,100 @@
 <%- include('partials/header') %>
+
 <main>
-  <h1>Je suis accueil admin</h1>
+  <h1>Aperçu Back-Office</h1>
+
+  <section class="table-section">
+    <!-- Tableau des Réservations -->
+    <div class="head-section">
+      <h2>Dernières Réservations</h2>
+      <button onclick="window.location.href = '/admin/reservations'" class="btn-add">Voir plus</button>
+    </div>
+    <table class="home-table">
+      <thead>
+        <tr>
+          <th>Numéro de Référence</th>
+          <th>Date de la réservation</th>
+          <th>Nbre de billets</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reservations.forEach(reservation => { %>
+          <tr>
+            <td><%= reservation.ref_number %></td>
+            <td><%= reservation.date %></td>
+            <td><%= reservation.ticket %></td>
+            <td><%= reservation.user.email %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="table-section">
+    <!-- Tableau des Attractions -->
+    <div class="head-section">
+      <h2>Dernières Attractions</h2>
+      <button onclick="window.location.href = '/admin/attractions'" class="btn-add">Voir plus</button>
+    </div>
+    <table class="home-table">
+      <thead>
+        <tr>
+          <th>Nom de l'Attraction</th>
+          <th>Catégorie</th>
+          <th>Description courte</th>
+          <th>Photo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% attractions.forEach(attraction => { %>
+          <tr>
+            <td><%= attraction.name %></td>
+            <td>
+              <% if (attraction.categories && attraction.categories.length > 0) { %>
+                <%= attraction.categories.map(category => category.name).join(", ") %>
+              <% } else { %>
+                Aucune catégorie
+              <% } %>
+            </td>
+            <td><%= attraction.description_short %></td>
+            <td><img class="img-attraction" src="<%= attraction.caroussel1 %>" alt="<%= attraction.name %>-2"></td>
+          </tr>
+        <% }) %>
+      </tbody>
+
+    </table>
+  </section>
+
+  <section class="table-section">
+    <!-- Tableau des Utilisateurs -->
+    <div class="head-section">
+      <h2>Derniers Utilisateurs</h2>
+      <button onclick="window.location.href = '/admin/users'" class="btn-add">Voir plus</button>
+    </div>
+    <table class="home-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Date de création de compte</th>
+          <th>Rôle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.lastname %></td>
+            <td><%= user.firstname %></td>
+            <td><%= user.email %></td>
+            <td><%= user.created_at %></td>
+            <td><%= user.role %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
 </main>
 
 <%- include('partials/footer') %>

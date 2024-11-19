@@ -7,9 +7,12 @@ import cors from "cors";
 import { router as  adminRouter } from "./src/routers/adminRouter/index.js";
 import { router as apiRouter } from "./src/routers/apiRouter/index.js";
 import path from "path";
+import compression from "compression";
 
 
 const app = express();
+
+app.use(compression());
 
 // Desactiver le header x-powered-by Express
 app.disable("x-powered-by");
@@ -36,7 +39,10 @@ app.set('views', securedPathToViews);
 
 
 app.use(cors({
-  origin: 'http://localhost:5173',  
+  origin: [
+    'http://localhost:4173',  
+    'http://localhost:5173',  
+  ],    
   credentials: true  
 }));
 

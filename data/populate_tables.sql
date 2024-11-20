@@ -64,18 +64,10 @@ VALUES
 INSERT INTO "user" 
 ("firstname", "lastname", "email", "password")
 VALUES
-    ('Micka','biloute','micka.biloute@oclock.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$31+9ddR7az3RqMJ7gCf62Q'),
+    ('Micka','biloute','mickael.goua@oclock.school','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$31+9ddR7az3RqMJ7gCf62Q'),
     ('Pierre','TheLeadDev','pie.boulet@gmx.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$zO5RB9nsuGaAiTYytaVD8g'),
     ('Bruno', 'Magic', 'magic.bruno@gmail.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$MQWkEtQjC2tec8vDtkCxhA'),
     ('Laura', 'Croco','laura.croco@gmail.com','$argon2id$v=19$m=16,t=2,p=1$TTMyR2FnenJWQXhvRUNsSw$MQWkEtQjC2tec8vDtkCxhA'),
-    ('Alice', 'Martin', 'alice.martin@example.com', 'password123'),
-    ('Bob', 'Dupont', 'bob.dupont@example.com', 'password456'),
-    ('Claire', 'Durand', 'claire.durand@example.com', 'password789'),
-    ('David', 'Moreau', 'david.moreau@example.com', 'password101');
--- Note : mdp de Laura argon2id = Password123456
--- Note : mdp de Buno argon2id = Azerty123456
--- Note : mdr de Pierre argon2id = Azerty456789 / pierre.theboss@oclock.io
--- Note : mdp de Micka argon2id = Azert123456789
 
 
 INSERT INTO "reservation"
@@ -84,7 +76,7 @@ VALUES
 (1, 10001, '2024-11-15', 2, 120.00),
 (2, 10002, '2024-11-16', 4, 240.00),
 (3, 10003, '2024-11-17', 1, 60.00),
-(4, 10004, '2024-11-17', 3, 180.00);
+(4, 10004, '2024-11-17', 3, 180.00),
 
 
 COMMIT;
